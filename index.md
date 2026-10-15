@@ -13,7 +13,7 @@ layout: homepage
       <p><u><a href="https://drive.google.com/file/d/1oPHVI89xoA7P31wOxD8m_oE5NOYv87zB/view?usp=sharing">CV</a></u> / <a href="mailto:{{ site.email }}"><u>email</u></a> / <a href="https://github.com/rahulbshrestha"><u>github</u></a> / <a href="https://www.linkedin.com/in/rahulbshrestha"><u>linkedin</u></a> / <a href="https://twitter.com/rahulbshrestha"><u>twitter</u></a> / <a href="https://scholar.google.com/citations?user=BKGkcH8AAAAJ"><u>google scholar</u></a></p>
     </div>
     <div class="col-md-4">
-        <img id="profile-photo" src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Rahul Shrestha at the Golden Gate Bridge" title="psst... click me">
+        <img id="profile-photo" src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Rahul B. Shrestha at the Golden Gate Bridge" title="psst... click me">
         <p class="photo-hint" aria-hidden="true"><span class="hint-arrow">▲</span> <span class="hint-text">click me</span></p>
     </div>
 </div>
