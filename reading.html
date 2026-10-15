@@ -2,15 +2,19 @@
 layout: default
 title: Reading
 ---
+{% assign shelves = "read,to_read" | split: "," %}
 <div class="other-pages reading">
   <h1 class="page-heading">Reading</h1>
   <p class="reading-intro">
-    Books on my <a href="https://www.goodreads.com/review/list/86408735?shelf=to-read">Goodreads to-read shelf</a>,
-    newest first. {{ site.data.reading | size }} books and counting. Recommendations welcome!
+    Synced from my <a href="https://www.goodreads.com/user/show/86408735">Goodreads</a>. Recommendations welcome!
   </p>
 
+  {% for shelf in shelves %}
+  {% assign books = site.data.reading[shelf] %}
+  <h2 class="shelf-heading">{% if shelf == "read" %}Read{% else %}To read{% endif %} <span class="shelf-count">{{ books | size }}</span></h2>
+
   <div class="book-grid">
-    {% for book in site.data.reading %}
+    {% for book in books %}
     <a class="book" href="{{ book.url }}" title="{{ book.title }} by {{ book.author }}">
       {% if book.cover != "" %}
       <img src="{{ book.cover }}" alt="Cover of {{ book.title }}" loading="lazy">
@@ -19,7 +23,12 @@ title: Reading
       {% endif %}
       <span class="book-title">{{ book.title }}</span>
       <span class="book-author">{{ book.author }}</span>
+      {% if shelf == "read" and book.rating > 0 %}
+      {% assign unrated = 5 | minus: book.rating %}
+      <span class="book-rating" aria-label="Rated {{ book.rating }} out of 5">{% for i in (1..book.rating) %}★{% endfor %}<span class="empty">{% if unrated > 0 %}{% for i in (1..unrated) %}★{% endfor %}{% endif %}</span></span>
+      {% endif %}
     </a>
     {% endfor %}
   </div>
+  {% endfor %}
 </div>

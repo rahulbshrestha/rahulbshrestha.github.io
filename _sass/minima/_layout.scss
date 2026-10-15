@@ -554,4 +554,25 @@ div.qa {
     font-size: 11px;
     color: $grey-color;
   }
+
+  .shelf-heading {
+    margin: $spacing-unit * 1.5 0 $spacing-unit * 0.75;
+    font-size: $base-font-size * 1.25;
+
+    .shelf-count {
+      font-size: $small-font-size;
+      color: $grey-color;
+    }
+  }
+
+  .book-rating {
+    margin-top: 3px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #e0a100;
+
+    .empty {
+      color: $grey-color-light;
+    }
+  }
 }
