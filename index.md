@@ -10,7 +10,7 @@ layout: homepage
       <p>Before this, I did my MSc in Informatics at TU Munich and my BSc in Computer Science at Jacobs University Bremen, both in Germany. 🇩🇪 I grew up in Kathmandu, Nepal. 🇳🇵</p>
       <p>Outside research, I play football ⚽, go to the gym 🏋️, play guitar 🎸, cook a lot (hand-pulled noodles are my weakness 🍜), travel whenever I can ✈️, and love well-written blog posts about lives very different from mine. 📖 <a href="mailto:{{ site.email }}">Reach out</a> if you want to chat! :)</p>
 <div>&nbsp;</div>
-      <p><u><a href="https://drive.google.com/file/d/1oPHVI89xoA7P31wOxD8m_oE5NOYv87zB/view?usp=sharing">CV</a></u> / <a href="mailto:{{ site.email }}"><u>email</u></a> / <a href="https://github.com/rahulbshrestha"><u>github</u></a> / <a href="https://twitter.com/rahulbshrestha"><u>twitter</u></a> / <a href="https://scholar.google.com/citations?user=BKGkcH8AAAAJ"><u>google scholar</u></a></p>
+      <p><u><a href="https://drive.google.com/file/d/1oPHVI89xoA7P31wOxD8m_oE5NOYv87zB/view?usp=sharing">CV</a></u> / <a href="mailto:{{ site.email }}"><u>email</u></a> / <a href="https://github.com/rahulbshrestha"><u>github</u></a> / <a href="https://www.linkedin.com/in/rahulbshrestha"><u>linkedin</u></a> / <a href="https://twitter.com/rahulbshrestha"><u>twitter</u></a> / <a href="https://scholar.google.com/citations?user=BKGkcH8AAAAJ"><u>google scholar</u></a></p>
     </div>
     <div class="col-md-4">
         <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Rahul Shrestha at the Golden Gate Bridge">
