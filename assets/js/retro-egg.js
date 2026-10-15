@@ -4,7 +4,6 @@
   var photo = document.getElementById('profile-photo');
   if (!photo) return;
 
-  var GB = ['#0f380f', '#306230', '#8bac0f', '#9bbc0f']; // darkest -> lightest
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canvas = null;
   var panel = null;
@@ -20,11 +19,10 @@
     document.head.appendChild(link);
   }
 
-  // Downscale the photo and map brightness onto the 4 Game Boy greens. Local contrast keeps the
-  // face readable against the bright sky; thresholds are the image's own brightness quartiles,
-  // with a light 2x2 Bayer dither for the classic look.
+  // Downscale the photo and round each colour channel to a few levels: 8-bit pixel art
+  // that still looks like the original
   function pixelate() {
-    var size = 96, gamma = 0.8, localContrast = 2.5, radius = 8, dither = 0.3;
+    var size = 64, levels = 6, step = 255 / (levels - 1);
     var small = document.createElement('canvas');
     small.width = small.height = size;
     var sctx = small.getContext('2d');
@@ -32,30 +30,8 @@
     sctx.drawImage(photo, (photo.naturalWidth - side) / 2, (photo.naturalHeight - side) / 2, side, side, 0, 0, size, size);
     var img = sctx.getImageData(0, 0, size, size);
     var d = img.data;
-    var lums = [];
     for (var i = 0; i < d.length; i += 4) {
-      lums.push(255 * Math.pow((0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255, gamma));
-    }
-    var enhanced = lums.map(function (v, p) {
-      var px = p % size, py = Math.floor(p / size), sum = 0, n = 0;
-      for (var dy = -radius; dy <= radius; dy++) {
-        for (var dx = -radius; dx <= radius; dx++) {
-          var nx = px + dx, ny = py + dy;
-          if (nx >= 0 && ny >= 0 && nx < size && ny < size) { sum += lums[ny * size + nx]; n++; }
-        }
-      }
-      return v + localContrast * (v - sum / n);
-    });
-    var sorted = enhanced.slice().sort(function (a, b) { return a - b; });
-    var q = [0.25, 0.5, 0.75].map(function (f) { return sorted[Math.floor(f * sorted.length)]; });
-    var bayer = [[-0.375, 0.125], [0.375, -0.125]];
-    for (var p = 0; p < enhanced.length; p++) {
-      var x = p % size, y = Math.floor(p / size);
-      var lum = enhanced[p] + bayer[y % 2][x % 2] * (q[2] - q[0]) / 2 * dither;
-      var hex = GB[lum < q[0] ? 0 : lum < q[1] ? 1 : lum < q[2] ? 2 : 3];
-      d[p * 4] = parseInt(hex.substr(1, 2), 16);
-      d[p * 4 + 1] = parseInt(hex.substr(3, 2), 16);
-      d[p * 4 + 2] = parseInt(hex.substr(5, 2), 16);
+      for (var c = 0; c < 3; c++) d[i + c] = Math.round(Math.round(d[i + c] / step) * step);
     }
     sctx.putImageData(img, 0, 0);
 
@@ -64,7 +40,7 @@
     canvas.width = canvas.height = size;
     canvas.getContext('2d').drawImage(small, 0, 0);
     canvas.setAttribute('role', 'img');
-    canvas.setAttribute('aria-label', 'Pixelated Game Boy version of the profile photo');
+    canvas.setAttribute('aria-label', 'Pixel-art version of the profile photo');
     canvas.addEventListener('click', toggle);
     photo.style.display = 'none';
     photo.parentNode.insertBefore(canvas, photo);
@@ -96,11 +72,10 @@
   // Each scene: the text to type and the state of the graph while it shows
   var scenes = [
     { text: 'A wild CONFOUNDER Z appeared!', state: 'start' },
-    { text: 'Z causes both X and Y, so their correlation is not just X\'s effect.', state: 'confounded' },
-    { text: 'RAHUL used do(X)!', state: 'intervene' },
-    { text: 'do(X) sets X by hand. Z no longer affects X, so its arrow is cut.', state: 'cut' },
-    { text: "The backdoor path is blocked. It's super effective!", state: 'cut' },
-    { text: "Now we see X's true causal effect on Y.", state: 'done' }
+    { text: 'Z affects both X and Y. That can trick you!', state: 'confounded' },
+    { text: 'YOU used do(X)!', state: 'intervene' },
+    { text: 'You set X yourself. Now Z cannot touch it.', state: 'cut' },
+    { text: "It's super effective! Now you see what X really does to Y.", state: 'done' }
   ];
 
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
