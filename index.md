@@ -22,7 +22,8 @@ layout: homepage
 {% for paper in site.data.papers %}
 <div class="paper">
   <div class="paper-thumb">
-    {% if paper.img %}<a href="{{ paper.img | relative_url }}" target="_blank" title="View full image"><img src="{{ paper.img | relative_url }}" alt="{{ paper.title }}"></a>{% endif %}
+    {% assign paper_link = paper.links | where: "name", "paper" | first | default: paper.links.first %}
+    {% if paper.img %}<a href="{% if paper_link %}{{ paper_link.url }}{% else %}{{ paper.img | relative_url }}{% endif %}" title="Open paper"><img src="{{ paper.img | relative_url }}" alt="{{ paper.title }}"></a>{% endif %}
   </div>
   <div class="paper-info">
     <h4>{{ paper.title }}</h4>
