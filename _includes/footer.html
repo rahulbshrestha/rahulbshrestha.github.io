@@ -3,13 +3,13 @@
 	<div>
     Get in touch: <a href="mailto:{{ site.email }}"><em>email</em></a>, <a href="https://github.com/rahulbshrestha"><em>github</em></a>, <a href="https://twitter.com/rahulbshrestha"><em>twitter</em></a>
 </div>
-    thanks for visiting! &nbsp;/&nbsp; design adapted from <a href="https://github.com/huiwenn/huiwenn.github.io" target="_blank">Sophia Sun's site</a>
+    thanks for visiting! &nbsp;/&nbsp; design adapted from <a href="https://github.com/huiwenn/huiwenn.github.io">Sophia Sun's site</a>
 </footer>
 
 <script src="{{ '/assets/js/hover-reveal.js' | relative_url }}"></script>
 <script>
-  // Open every link outside the top bar in a new tab (email links excluded)
-  document.querySelectorAll('a[href]').forEach(function (a) {
+  // On the homepage, open every link outside the top bar in a new tab (email links excluded)
+  if (document.querySelector('main.homepage')) document.querySelectorAll('a[href]').forEach(function (a) {
     if (a.closest('.site-header') || a.getAttribute('href').indexOf('mailto:') === 0) return;
     a.target = '_blank';
     a.rel = 'noopener';
