@@ -576,3 +576,134 @@ div.qa {
     }
   }
 }
+
+/**
+ * Easter egg: click the profile photo for a Game Boy-style causality battle
+ */
+#profile-photo {
+  cursor: pointer;
+}
+
+.homepage .col-md-4 canvas.retro-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  cursor: pointer;
+  border: 3px solid $text-color;
+  box-shadow: 6px 6px 0 $text-color;
+}
+
+.retro-battle {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  background: #9bbc0f;
+  border: 3px solid $text-color;
+  box-shadow: 6px 6px 0 $text-color;
+  font-family: 'Press Start 2P', monospace;
+  color: #0f380f;
+  animation: retro-pop 0.25s steps(3);
+
+  @include media-query($on-palm) {
+    right: 16px;
+    left: 16px;
+    bottom: 16px;
+    width: auto;
+  }
+
+  .retro-close {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 10px;
+    color: #0f380f;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 18px 16px 6px;
+    box-sizing: border-box;
+
+    .edge {
+      stroke: #0f380f;
+      stroke-width: 2;
+    }
+
+    .cut {
+      stroke: #0f380f;
+      stroke-width: 2;
+      opacity: 0;
+    }
+
+    .node {
+      fill: #8bac0f;
+      stroke: #0f380f;
+      stroke-width: 2;
+    }
+
+    text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      text-anchor: middle;
+      fill: #0f380f;
+    }
+  }
+
+  .retro-text {
+    position: relative;
+    min-height: 58px;
+    margin: 0 10px 10px;
+    padding: 10px 22px 10px 10px;
+    border: 2px solid #0f380f;
+    border-radius: 3px;
+    background: $white-color;
+    font-size: 8px;
+    line-height: 1.8;
+  }
+
+  .retro-next {
+    position: absolute;
+    right: 7px;
+    bottom: 5px;
+    font-size: 7px;
+    animation: retro-blink 1s steps(1) infinite;
+  }
+
+  // Graph states driven by the script
+  &[data-state="start"] .edge-xy,
+  &[data-state="start"] .edge-zx,
+  &[data-state="start"] .edge-zy { opacity: 0; }
+
+  &[data-state="confounded"] .node-z { fill: #306230; }
+  &[data-state="confounded"] .label-z { fill: #9bbc0f; }
+
+  &[data-state="intervene"] .node-x { fill: #306230; }
+  &[data-state="intervene"] .edge-zx { animation: retro-flicker 0.4s steps(1) infinite; }
+
+  &[data-state="cut"] .edge-zx,
+  &[data-state="done"] .edge-zx { opacity: 0.2; }
+  &[data-state="cut"] .cut,
+  &[data-state="done"] .cut { opacity: 1; }
+  &[data-state="done"] .edge-xy { stroke-width: 3; }
+}
+
+@keyframes retro-blink { 50% { opacity: 0; } }
+@keyframes retro-flicker { 50% { opacity: 0; } }
+@keyframes retro-pop { from { transform: scale(0.6); } to { transform: scale(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .retro-battle,
+  .retro-battle .retro-next,
+  .retro-battle .edge-zx { animation: none !important; }
+}
