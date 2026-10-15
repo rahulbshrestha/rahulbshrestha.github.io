@@ -419,56 +419,45 @@ div.qa {
 }
 
 .post-title {
-  @include relative-font-size(2);
+  font-family: $roboto;
+  font-size: 24px;
+  font-weight: $base-font-weight;
   letter-spacing: 0px;
-  line-height: 1.2;
+  line-height: 1.3;
   max-width: 100%;
-
-  @include media-query($on-laptop) {
-    @include relative-font-size(2.2);
-  }
 }
 
+// Posts use the same monospace type and quiet hierarchy as the homepage
 .post-content {
-  h2 {
-    @include relative-font-size(1.8);
-    font-weight: $base-font-weight * 1.5;
-    margin-top: $spacing-unit * 1.55;
+  font-family: $roboto;
+  font-size: $small-font-size;
+  line-height: 1.7;
 
-    @include media-query($on-laptop) {
-      @include relative-font-size(1.75);
-    }
+  h2 {
+    font-size: $base-font-size;
+    font-weight: bold;
+    margin-top: $spacing-unit * 1.5;
+    margin-bottom: $spacing-unit * 0.5;
   }
 
   h3 {
-    @include relative-font-size(1.3);
-    font-weight: $base-font-weight * 1.35;
-    margin-top: $spacing-unit * 1.1;
-
-    @include media-query($on-laptop) {
-      @include relative-font-size(1.375);
-    }
+    font-size: $small-font-size;
+    font-weight: bold;
+    margin-top: $spacing-unit;
   }
 
   h4 {
-    @include relative-font-size(1.15);
-    font-weight: $base-font-weight * 2.0;
-
-    @include media-query($on-laptop) {
-      @include relative-font-size(1.125);
-    }
+    font-size: $small-font-size;
+    font-weight: bold;
   }
 
-  a {
-    border-bottom: 1px dotted #bbb;
-    padding-bottom: 1px;
+  li {
+    margin-bottom: 12px;
+  }
 
-    &:hover {
-      color: $grey-color;
-      border-bottom: 1px solid $grey-color;
-      padding-bottom: 1px;
-      text-decoration: none;
-    }
+  .paper-meta {
+    color: $grey-color;
+    font-size: 13px;
   }
 
   blockquote {
