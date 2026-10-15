@@ -1,4 +1,4 @@
-"""Sync the Goodreads "read" and "to-read" shelves into _data/reading.json.
+"""Sync the Goodreads "read", "currently-reading" and "to-read" shelves into _data/reading.json.
 
 Goodreads no longer offers a public API, but each shelf has an RSS feed.
 This reads every page of those feeds and writes the books the Reading page shows.
@@ -14,7 +14,7 @@ from pathlib import Path
 
 USER_ID = "86408735"
 # Shelf name on Goodreads -> key in reading.json
-SHELVES = {"read": "read", "to-read": "to_read"}
+SHELVES = {"read": "read", "currently-reading": "currently_reading", "to-read": "to_read"}
 FEED_URL = "https://www.goodreads.com/review/list_rss/{user}?shelf={shelf}&page={page}"
 OUTPUT = Path(__file__).resolve().parent.parent / "_data" / "reading.json"
 MAX_PAGES = 50  # 100 books per page

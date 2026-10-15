@@ -190,6 +190,125 @@
       "rating": 5
     }
   ],
+  "currently_reading": [
+    {
+      "title": "Machine Learning Q and AI: 30 Essential Questions and Answers on Machine Learning and AI",
+      "author": "Sebastian Raschka",
+      "url": "https://www.goodreads.com/book/show/199392373",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1714765076l/199392373._SX318_.jpg",
+      "added": "2025-08-05",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Causal Inference in Statistics: A Primer",
+      "author": "Judea Pearl",
+      "url": "https://www.goodreads.com/book/show/27164550",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1455502089l/27164550.jpg",
+      "added": "2025-07-23",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Machine Learning Yearning",
+      "author": "Andrew Ng",
+      "url": "https://www.goodreads.com/book/show/30741739",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1480798569l/30741739._SX318_.jpg",
+      "added": "2025-04-11",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "The World As I See It",
+      "author": "Albert Einstein",
+      "url": "https://www.goodreads.com/book/show/231610",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1349050318l/231610.jpg",
+      "added": "2025-02-08",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Build a Large Language Model (From Scratch)",
+      "author": "Sebastian Raschka",
+      "url": "https://www.goodreads.com/book/show/209234015",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1709068166l/209234015._SX318_.jpg",
+      "added": "2025-01-18",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Norwegian Wood",
+      "author": "Haruki Murakami",
+      "url": "https://www.goodreads.com/book/show/11297",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1713542603l/11297._SY475_.jpg",
+      "added": "2024-10-11",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "This is Going to Hurt: Secret Diaries of a Junior Doctor",
+      "author": "Adam Kay",
+      "url": "https://www.goodreads.com/book/show/35510008",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498340278l/35510008._SY475_.jpg",
+      "added": "2024-05-26",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Asian Godfathers",
+      "author": "Joe Studwell",
+      "url": "https://www.goodreads.com/book/show/2035572",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1337765644l/2035572.jpg",
+      "added": "2024-04-27",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Quiet Leadership: Winning Hearts, Minds and Matches",
+      "author": "Carlo Ancelotti",
+      "url": "https://www.goodreads.com/book/show/28264501",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1450773417l/28264501._SX318_.jpg",
+      "added": "2023-05-09",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "The Effective Engineer: How to Leverage Your Efforts In Software Engineering to Make a Disproportionate and Meaningful Impact",
+      "author": "Edmond Lau",
+      "url": "https://www.goodreads.com/book/show/25238425",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1427583285l/25238425.jpg",
+      "added": "2023-03-11",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "The Upside of Stress: Why Stress Is Good for You, and How to Get Good at It",
+      "author": "Kelly McGonigal",
+      "url": "https://www.goodreads.com/book/show/23281639",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1413129464l/23281639.jpg",
+      "added": "2022-11-06",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "Things Hidden Since the Foundation of the World",
+      "author": "René Girard",
+      "url": "https://www.goodreads.com/book/show/337517",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1407812596l/337517.jpg",
+      "added": "2022-02-22",
+      "read_at": "",
+      "rating": 0
+    },
+    {
+      "title": "How Asia Works: Success and Failure in the World's Most Dynamic Region",
+      "author": "Joe Studwell",
+      "url": "https://www.goodreads.com/book/show/16144575",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1369869888l/16144575.jpg",
+      "added": "2021-10-10",
+      "read_at": "",
+      "rating": 0
+    }
+  ],
   "to_read": [
     {
       "title": "Several Short Sentences About Writing",

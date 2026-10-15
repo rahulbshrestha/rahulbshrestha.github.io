@@ -2,7 +2,7 @@
 layout: default
 title: Reading
 ---
-{% assign shelves = "read,to_read" | split: "," %}
+{% assign shelves = "read,currently_reading,to_read" | split: "," %}
 <div class="other-pages reading">
   <h1 class="page-heading">Reading</h1>
   <p class="reading-intro">
@@ -11,7 +11,7 @@ title: Reading
 
   {% for shelf in shelves %}
   {% assign books = site.data.reading[shelf] %}
-  <h2 class="shelf-heading">{% if shelf == "read" %}Read{% else %}To read{% endif %} <span class="shelf-count">{{ books | size }}</span></h2>
+  <h2 class="shelf-heading">{% case shelf %}{% when "currently_reading" %}Currently reading{% when "read" %}Read{% else %}To read{% endcase %} <span class="shelf-count">{{ books | size }}</span></h2>
 
   <div class="book-grid">
     {% for book in books %}
