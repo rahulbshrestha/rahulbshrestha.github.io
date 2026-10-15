@@ -37,4 +37,4 @@ layout: homepage
 
 <p style="font-size:10px;">* denotes equal contribution, † denotes core contributor</p>
 
-<script src="{{ '/assets/js/retro-egg.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/retro-egg.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
