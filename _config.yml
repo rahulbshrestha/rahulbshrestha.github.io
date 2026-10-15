@@ -7,14 +7,13 @@ baseurl: ""
 permalink: /:title
 
 # Links in the header, in order.
-# To add a project, write a post with `categories: projects` and an `img:` path.
 nav:
   - title: Home
     url: /
   - title: Blog
     url: /blog
-  - title: Projects
-    url: /projects
+  - title: Reading
+    url: /reading
 
 # Build settings
 markdown: kramdown
@@ -32,5 +31,6 @@ sass:
 # archive/ holds the old pre-Jekyll site; it's kept in the repo but not published.
 exclude:
   - archive/
+  - scripts/
   - Gemfile
   - Gemfile.lock

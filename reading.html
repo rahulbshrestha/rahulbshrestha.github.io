@@ -1,0 +1,25 @@
+---
+layout: default
+title: Reading
+---
+<div class="other-pages reading">
+  <h1 class="page-heading">Reading</h1>
+  <p class="reading-intro">
+    Books on my <a href="https://www.goodreads.com/review/list/86408735?shelf=to-read">Goodreads to-read shelf</a>,
+    newest first. {{ site.data.reading | size }} books and counting. Recommendations welcome!
+  </p>
+
+  <div class="book-grid">
+    {% for book in site.data.reading %}
+    <a class="book" href="{{ book.url }}" title="{{ book.title }} by {{ book.author }}">
+      {% if book.cover != "" %}
+      <img src="{{ book.cover }}" alt="Cover of {{ book.title }}" loading="lazy">
+      {% else %}
+      <span class="book-nocover">{{ book.title }}</span>
+      {% endif %}
+      <span class="book-title">{{ book.title }}</span>
+      <span class="book-author">{{ book.author }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>
