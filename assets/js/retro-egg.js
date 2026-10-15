@@ -72,10 +72,10 @@
   // Each scene: the text to type and the state of the graph while it shows
   var scenes = [
     { text: 'A wild CONFOUNDER Z appeared!', state: 'start' },
-    { text: 'Z affects both X and Y. That can trick you!', state: 'confounded' },
-    { text: 'YOU used do(X)!', state: 'intervene' },
-    { text: 'You set X yourself. Now Z cannot touch it.', state: 'cut' },
-    { text: "It's super effective! Now you see what X really does to Y.", state: 'done' }
+    { text: 'Z causes both X and Y. Correlation is not causation!', state: 'confounded' },
+    { text: 'YOU used INTERVENTION do(X)!', state: 'intervene' },
+    { text: 'The arrow Z→X is cut. The backdoor path is blocked!', state: 'cut' },
+    { text: "It's super effective! You found the causal effect of X on Y.", state: 'done' }
   ];
 
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
