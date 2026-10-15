@@ -1,7 +1,7 @@
 <header class="site-header" role="banner" id='header-bar'>
 
     <div class="wrapper">
-        <a class="site-title" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
+        <a class="site-title" href="{{ "/" | relative_url }}">{{ site.title | escape | replace: ". ", '<span class="title-dot">.</span> ' }}</a>
 
         <nav class="site-nav">
             {% for item in site.nav %}

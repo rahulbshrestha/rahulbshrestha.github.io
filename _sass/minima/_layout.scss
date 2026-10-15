@@ -740,3 +740,8 @@ div.qa {
 .homepage .kw-llm {
   background: linear-gradient(#f28a3e, #d2560f);
 }
+
+// The monospace font gives "." a full-width slot, so ". " in the name looked like a double space
+.site-title .title-dot {
+  letter-spacing: -0.3em;
+}

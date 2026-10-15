@@ -4,7 +4,7 @@ title: Causality Papers I Should Read
 tags: [causality]
 ---
 
-A running list of papers on causality, language models and machine learning that I want to read (or reread). 60 so far, grouped by theme, newest first within each group.
+A running list of papers on causality, language models and machine learning that I want to read (or reread).
 
 <!--more-->
 
