@@ -476,3 +476,9 @@ div.qa {
     font-weight: 0.8 * $base-font-weight;
   }
 }
+
+// Profile photo: solid border with a flat, hard-edged drop shadow
+.homepage .col-md-4 img {
+  border: 3px solid $text-color;
+  box-shadow: 6px 6px 0 $text-color;
+}
