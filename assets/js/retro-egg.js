@@ -106,8 +106,6 @@
     active = !active;
     timers.forEach(clearTimeout);
     timers = [];
-    var hint = document.querySelector('.photo-hint .hint-text');
-    if (hint) hint.textContent = active ? 'click again to exit' : 'click me';
     if (active) {
       loadFont();
       pixelate();
