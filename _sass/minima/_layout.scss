@@ -718,3 +718,25 @@ div.qa {
 @media (prefers-reduced-motion: reduce) {
   .homepage .photo-hint .hint-arrow { animation: none; }
 }
+
+// Research interests in the bio, styled like Pokémon type badges
+.homepage .kw-retro {
+  display: inline-block;
+  padding: 4px 8px 3px;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  color: $white-color;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+  vertical-align: middle;
+}
+
+.homepage .kw-causality {
+  background: linear-gradient(#5a9be0, #2f73b8);
+}
+
+.homepage .kw-llm {
+  background: linear-gradient(#f28a3e, #d2560f);
+}
