@@ -1,0 +1,478 @@
+/**
+ * Site header
+ */
+.site-header {
+  font-family: $roboto;
+  background: $white-color;
+  min-height: $spacing-unit * 1.865;
+  position: relative;
+}
+
+.site-title {
+  @include relative-font-size(1.6);
+  color: #grey-color;
+  letter-spacing: 0px;
+  line-height: $base-line-height * $base-font-size * 2.25;
+  margin-bottom: 0;
+  float: left;
+
+  &,
+  &:visited {
+    color: #grey-color-light;
+  }
+
+  &:hover {
+    color: $grey-color-light;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.site-nav {
+  float: right;
+  text-align: right;
+  line-height: $base-line-height * $base-font-size * 2.25;
+  padding-right: 10px;
+
+  .nav-trigger {
+    display: none;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+
+  .page-link {
+    color: #grey-color-light;
+    line-height: $base-line-height;
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    &:hover {
+      color: $grey-color-vlight;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  @include media-query($on-palm) {
+    position: absolute;
+    top: 9px;
+    right: $spacing-unit / 2;
+    background-color: $background-color;
+    border: 1px solid $grey-color-light;
+    border-radius: 5px;
+    text-align: right;
+
+    label[for="nav-trigger"] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .menu-icon {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+
+      > svg path {
+        fill: $grey-color-light;
+      }
+    }
+
+    input ~ .trigger {
+      clear: both;
+      display: none;
+    }
+
+    input:checked ~ .trigger {
+      display: block;
+      padding-bottom: 5px;
+    }
+
+    .page-link {
+      display: block;
+      padding: 5px 10px;
+
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+      margin-left: 20px;
+    }
+  }
+}
+
+/**
+ * Site footer
+ */
+.site-footer {
+  font-family: $roboto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  font-size: $small-font-size;
+  color: $grey-color;
+  clear: both;
+  margin-bottom: 30px;
+
+  a {
+    color: $grey-color;
+  }
+
+  p {
+    margin: 5px auto;
+    width: 200px;
+  }
+
+  img {
+    width: 26px;
+    height: 26px;
+    margin: 0 4px;
+    display: block;
+    float: left;
+  }
+}
+
+/**
+ * Homepage
+ */
+.homepage {
+  margin-top: $spacing-unit * 3;
+  margin-bottom: $spacing-unit * 2;
+  font-family: $roboto;
+
+  p {
+    font-size: $small-font-size;
+    margin-top: 0;
+  }
+
+  li {
+    font-size: $small-font-size;
+    color: $grey-color;
+    line-height: 1.5;
+
+    b {
+      color: $text-color;
+    }
+  }
+
+  h2 {
+    margin-top: $spacing-unit * 2;
+    font-size: $base-font-size;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: $small-font-size;
+    margin-bottom: 3px;
+    font-weight: bold;
+    color: $text-color;
+  }
+
+  ul {
+    margin-bottom: $spacing-unit * 0.6;
+  }
+
+  img {
+    @include media-query($on-palm) {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+  }
+
+  .paper {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: $spacing-unit * 1.5;
+
+    @include media-query($on-palm) {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+
+  // Every image fits a 300x190 area without cropping, top-aligned with the title
+  .paper-thumb {
+    flex: 0 0 300px;
+
+    a {
+      display: block;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 190px;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      transition: opacity 0.2s;
+    }
+
+    a:hover img {
+      opacity: 0.8;
+    }
+
+    @include media-query($on-palm) {
+      flex: none;
+      width: 100%;
+
+      &:empty {
+        display: none;
+      }
+
+      img {
+        max-height: 240px;
+      }
+    }
+  }
+
+  .paper-info {
+    flex: 1;
+    min-width: 0;
+    font-size: $small-font-size;
+    color: $grey-color;
+    line-height: 1.5;
+
+    h4 {
+      margin-top: 0;
+    }
+
+    b {
+      color: $text-color;
+    }
+  }
+}
+
+.page-content {
+  padding: $spacing-unit 0;
+}
+
+/**
+ * Blog page
+ */
+.page-heading {
+  @include relative-font-size(1.6);
+  font-family: $roboto;
+  font-weight: $base-font-weight * 1.2;
+  margin-top: $spacing-unit;
+}
+
+.post-list {
+  margin-left: 0;
+  list-style: none;
+  font-family: $base-font-family;
+
+  > li {
+    padding-top: $spacing-unit * 1.5;
+    padding-bottom: $spacing-unit * 1.5;
+    border-bottom: 1px solid $grey-color;
+
+    &:first-child {
+      border-top: 1px solid $grey-color;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.post-meta {
+  font-size: $small-font-size;
+  font-family: $roboto;
+  color: $grey-color;
+
+  a.post-tag {
+    border-radius: 5px;
+    border: 1px solid $grey-color;
+    color: $grey-color;
+    padding: 1px 5px;
+    margin-left: 5px;
+
+    &:hover {
+      border: 1px solid $grey-color;
+      text-decoration: none;
+      color: #ffffff;
+      background: $grey-color;
+    }
+  }
+}
+
+.post-link {
+  font-weight: $base-font-weight;
+  font-family: $roboto;
+  display: block;
+  font-size: $base-font-size;
+  color: $text-color;
+
+  &:hover {
+    color: $grey-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.post-excerpt {
+  display: block;
+  margin-top: 5px;
+  font-size: $small-font-size;
+  line-height: 1.5;
+  color: $grey-color-dark;
+
+  blockquote {
+    font-family: $roboto;
+    font-size: $small-font-size;
+    line-height: 1.5;
+    font-weight: $base-font-weight;
+    letter-spacing: 0px;
+    background: $white-color;
+  }
+}
+
+/**
+ * FAQ / Other pages
+ */
+.other-pages {
+  margin-top: $spacing-unit * 0.5;
+}
+
+div.qa {
+  margin: 10px;
+  padding: 10px;
+
+  .question {
+    border-radius: 5px;
+    background: #eeeeee;
+    padding: 5px;
+    padding-left: 20px;
+  }
+}
+
+/**
+ * Projects page
+ */
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-unit * 1.2 0;
+  border-bottom: 1px solid $grey-color;
+  text-decoration: none;
+  gap: $spacing-unit;
+
+  &:first-child {
+    border-top: 1px solid $grey-color;
+  }
+
+  .project-title {
+    font-family: $roboto;
+    font-size: $base-font-size;
+    width: 40%;
+    flex-shrink: 0;
+  }
+
+  .project-img {
+    width: 50%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  @include media-query($on-palm) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .project-title {
+      width: 100%;
+      margin-bottom: $spacing-unit * 0.5;
+    }
+
+    .project-img {
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+  }
+}
+
+/**
+ * Post detail
+ */
+.post-header {
+  margin-top: $spacing-unit;
+  margin-bottom: $spacing-unit;
+}
+
+.post-title {
+  @include relative-font-size(2);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  max-width: 100%;
+
+  @include media-query($on-laptop) {
+    @include relative-font-size(2.2);
+  }
+}
+
+.post-content {
+  h2 {
+    @include relative-font-size(1.8);
+    font-weight: $base-font-weight * 1.5;
+    margin-top: $spacing-unit * 1.55;
+
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.75);
+    }
+  }
+
+  h3 {
+    @include relative-font-size(1.3);
+    font-weight: $base-font-weight * 1.35;
+    margin-top: $spacing-unit * 1.1;
+
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.375);
+    }
+  }
+
+  h4 {
+    @include relative-font-size(1.15);
+    font-weight: $base-font-weight * 2.0;
+
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.125);
+    }
+  }
+
+  a {
+    border-bottom: 1px dotted #bbb;
+    padding-bottom: 1px;
+
+    &:hover {
+      color: $grey-color;
+      border-bottom: 1px solid $grey-color;
+      padding-bottom: 1px;
+      text-decoration: none;
+    }
+  }
+
+  blockquote {
+    letter-spacing: 0.1px;
+    font-weight: 0.8 * $base-font-weight;
+  }
+}

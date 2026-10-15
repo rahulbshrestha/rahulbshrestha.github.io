@@ -1,0 +1,36 @@
+title: Rahul Shrestha
+author: Rahul B. Shrestha
+description: A curation of interesting links, books and articles on the Internet.
+email: rahulshrestha0101@gmail.com
+url: https://rahulbshrestha.github.io
+baseurl: ""
+permalink: /:title
+
+# Links in the header, in order.
+# To add a project, write a post with `categories: projects` and an `img:` path.
+nav:
+  - title: Home
+    url: /
+  - title: Blog
+    url: /blog
+  - title: Projects
+    url: /projects
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+excerpt_separator: <!--more-->
+plugins:
+  - jekyll-feed
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+sass:
+  sass_dir: _sass
+
+# archive/ holds the old pre-Jekyll site; it's kept in the repo but not published.
+exclude:
+  - archive/
+  - Gemfile
+  - Gemfile.lock

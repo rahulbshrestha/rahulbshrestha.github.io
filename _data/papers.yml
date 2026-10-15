@@ -1,0 +1,52 @@
+# Selected works on the homepage, in display order (same as the CV).
+# "Rahul B. Shrestha" is bolded automatically. img is an optional square thumbnail. * equal contribution, † core contributor.
+- title: "CauSciBench: Can LLMs Automate Causal Inference in Real-World Scientific Research?"
+  img: /assets/img/papers/causcibench.png
+  authors: "Sawal Acharya*, Terry Jingchen Zhang*, Andrew Kim†, Rahul B. Shrestha†, et al."
+  venue: "International Conference on Machine Learning (ICML)"
+  year: 2026
+  links:
+    - name: paper
+      url: https://openreview.net/pdf?id=v9d4RqaPFO
+    - name: code
+      url: https://github.com/causalNLP/CauSciBench
+
+- title: "Causal AI Scientist: Towards End-to-End Causal Inference with Large Language Models"
+  img: /assets/img/papers/causal-ai-scientist.png
+  authors: "Sawal Acharya, Rahul B. Shrestha, Jacob T. Emmerson, Vishal Verma, Devansh Bhardwaj, Samuel Simko, Punya Syon Pandey, Anahita Haghighat, Yongjin Yang, Dominik Janzing, Mrinmaya Sachan, Bernhard Schölkopf, Zhijing Jin"
+  venue: "Under review"
+  year: 2026
+  links:
+    - name: paper
+      url: https://openreview.net/forum?id=rIAuqhy6S0
+    - name: code
+      url: https://github.com/causalNLP/causal-agent
+
+- title: "Causal Tutor: An Interactive Learning and Research Tool for Causal Inference"
+  img: /assets/img/papers/causal-tutor.png
+  authors: "Zaryab Muhammad Akram*, Rahul B. Shrestha*, Yara Allam*, Aryan Amit Barsainyan, Omar El Herraoui, Kosei Uemura, Xianlin Sun, Terry Jingchen Zhang, Bernhard Schölkopf, Zhijing Jin"
+  venue: "Under review"
+  year: 2026
+  links:
+    - name: paper
+      url: https://drive.google.com/file/d/1nrzAfOzB33oXCmQ-TsjgdSBTpG9dT6iq/view?usp=drive_link
+    - name: code
+      url: https://github.com/causalNLP/causal-tutor
+
+- title: "CLAIM-FUSE: Causal Discovery with Heterogenous and Uncertain Knowledge"
+  img: /assets/img/papers/claim-fuse.png
+  authors: "Yahang Qi, Erivan Inan, Rahul B. Shrestha*, Luke Zhang, Dehan Kong, Zhijing Jin"
+  venue: "Under review"
+  year: 2026
+  links:
+    - name: paper
+      url: https://drive.google.com/file/d/1yGQG_tdVWmKVDAvl-javhUq9wtQQwt4U/view?usp=sharing
+
+- title: "From Causal Parrots to Causal Prophets? Towards Sound Causal Reasoning with Large Language Models"
+  img: /assets/img/papers/causal-parrots.png
+  authors: "Rahul B. Shrestha*, Simon Malberg*, Georg Groh"
+  venue: "International Conference on NLP for Digital Humanities (NLP4DH)"
+  year: 2025
+  links:
+    - name: paper
+      url: https://aclanthology.org/2025.nlp4dh-1.29/
