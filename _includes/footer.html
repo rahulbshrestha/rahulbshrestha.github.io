@@ -7,3 +7,11 @@
 </footer>
 
 <script src="{{ '/assets/js/hover-reveal.js' | relative_url }}"></script>
+<script>
+  // Open every link outside the top bar in a new tab (email links excluded)
+  document.querySelectorAll('a[href]').forEach(function (a) {
+    if (a.closest('.site-header') || a.getAttribute('href').indexOf('mailto:') === 0) return;
+    a.target = '_blank';
+    a.rel = 'noopener';
+  });
+</script>
