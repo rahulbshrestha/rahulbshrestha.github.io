@@ -14,6 +14,7 @@ layout: homepage
     </div>
     <div class="col-md-4">
         <img id="profile-photo" src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Rahul Shrestha at the Golden Gate Bridge" title="psst... click me">
+        <p class="photo-hint" aria-hidden="true"><span class="hint-arrow">▲</span> <span class="hint-text">click me</span></p>
     </div>
 </div>
 <div>&nbsp;</div>

@@ -696,3 +696,25 @@ div.qa {
   .retro-battle .retro-next,
   .retro-battle .edge-zx { animation: none !important; }
 }
+
+// Small hint under the profile photo pointing to the easter egg
+.homepage .photo-hint {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: $grey-color;
+
+  .hint-arrow {
+    display: inline-block;
+    animation: hint-bounce 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homepage .photo-hint .hint-arrow { animation: none; }
+}
