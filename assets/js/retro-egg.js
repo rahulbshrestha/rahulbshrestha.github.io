@@ -71,16 +71,17 @@
       '<div class="battle-wipe" aria-hidden="true">' + new Array(9).join('<i></i>') + '</div>' +
       '<div class="battle-field">' +
         '<div class="info-box foe-info"><div class="mon-name">CONFOUNDER Z</div>' + hpBar('foe-hp') + '</div>' +
-        '<svg class="foe-sprite" viewBox="0 0 120 72" shape-rendering="crispEdges" aria-hidden="true">' +
-          '<defs><marker id="retro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto">' +
-          '<path d="M0,0 L6,3 L0,6 z" fill="#0f380f"/></marker></defs>' +
-          '<line class="edge edge-zx" x1="54" y1="18" x2="30" y2="47" marker-end="url(#retro-arrow)"/>' +
-          '<line class="edge edge-zy" x1="66" y1="18" x2="90" y2="47" marker-end="url(#retro-arrow)"/>' +
-          '<line class="edge edge-xy" x1="34" y1="56" x2="84" y2="56" marker-end="url(#retro-arrow)"/>' +
-          '<g class="cut"><line x1="37" y1="28" x2="47" y2="38"/><line x1="47" y1="28" x2="37" y2="38"/></g>' +
-          '<rect class="node node-z" x="52" y="2" width="16" height="16"/><text class="label-z" x="60" y="13.5">Z</text>' +
-          '<rect class="node node-x" x="16" y="48" width="16" height="16"/><text x="24" y="59.5">X</text>' +
-          '<rect class="node" x="88" y="48" width="16" height="16"/><text x="96" y="59.5">Y</text>' +
+        '<svg class="foe-sprite" viewBox="0 0 120 84" shape-rendering="crispEdges" aria-hidden="true">' +
+          '<defs><marker id="retro-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto">' +
+          '<path d="M0,0 L10,5 L0,10 z" fill="#0f380f"/></marker></defs>' +
+          // arrows stop just short of each target box so the direction is obvious
+          '<line class="edge edge-zx" x1="53" y1="22" x2="27" y2="56" marker-end="url(#retro-arrow)"/>' +
+          '<line class="edge edge-zy" x1="67" y1="22" x2="93" y2="56" marker-end="url(#retro-arrow)"/>' +
+          '<line class="edge edge-xy" x1="29" y1="70" x2="90" y2="70" marker-end="url(#retro-arrow)"/>' +
+          '<g class="cut"><line x1="34" y1="33" x2="46" y2="45"/><line x1="46" y1="33" x2="34" y2="45"/></g>' +
+          '<rect class="node node-z" x="50" y="1" width="20" height="20"/><text class="label-z" x="60" y="15">Z</text>' +
+          '<rect class="node node-x" x="7" y="60" width="20" height="20"/><text x="17" y="74">X</text>' +
+          '<rect class="node" x="93" y="60" width="20" height="20"/><text x="103" y="74">Y</text>' +
         '</svg>' +
         '<img class="me-sprite" src="/assets/img/trainer.png" alt="" aria-hidden="true">' +
         '<div class="info-box me-info"><div class="mon-name">YOU</div>' + hpBar('me-hp') + '</div>' +

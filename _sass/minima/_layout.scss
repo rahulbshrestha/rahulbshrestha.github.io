@@ -684,12 +684,12 @@ div.qa {
 
     .edge {
       stroke: $gb-darkest;
-      stroke-width: 2;
+      stroke-width: 2.5;
     }
 
     .cut {
       stroke: $gb-darkest;
-      stroke-width: 2;
+      stroke-width: 3;
       opacity: 0;
     }
 
@@ -703,7 +703,7 @@ div.qa {
 
     text {
       font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
+      font-size: 10px;
       text-anchor: middle;
       fill: $gb-darkest;
     }
@@ -864,7 +864,7 @@ div.qa {
   &[data-state="won"] .edge-zx { opacity: 0.2; }
   &[data-state="cut"] .cut,
   &[data-state="won"] .cut { opacity: 1; }
-  &[data-state="won"] .edge-xy { stroke-width: 3; }
+  &[data-state="won"] .edge-xy { stroke-width: 3.5; }
   &[data-state="won"] .node-z { opacity: 0.4; }
 }
 
