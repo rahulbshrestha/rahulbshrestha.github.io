@@ -50,9 +50,12 @@
     '.KbbbbBBBBBBBBBBBBBBBBBBBBBbbbbK',
     '.KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'
   ];
+  // Game Boy 4-shade greens, as in the original Red/Blue
   var TRAINER_COLORS = {
-    K: '#1a1a1a', R: '#d23c3c', r: '#9e2a2a', W: '#ffffff', H: '#3b2a20',
-    S: '#f2c29b', B: '#2f6fd1', b: '#22509a', Y: '#e8b83a', y: '#b88a1f'
+    K: '#0f380f', H: '#0f380f', b: '#0f380f',
+    r: '#306230', B: '#306230', y: '#306230',
+    R: '#8bac0f', Y: '#8bac0f',
+    W: '#9bbc0f', S: '#9bbc0f'
   };
 
   function drawTrainer(target) {
@@ -118,8 +121,7 @@
     panel.setAttribute('aria-label', 'Causality battle: pick the move that defeats the confounder');
     panel.innerHTML =
       '<button class="retro-close" aria-label="Close">✕</button>' +
-      '<div class="battle-intro" aria-hidden="true"><div class="intro-title">CAUSAL<br>BATTLE</div>' +
-        '<div class="intro-sub">LOADING...</div><div class="load-bar"><i></i></div></div>' +
+      '<div class="battle-wipe" aria-hidden="true">' + new Array(9).join('<i></i>') + '</div>' +
       '<div class="battle-field">' +
         '<div class="info-box foe-info"><div class="mon-name">CONFOUNDER Z</div>' + hpBar('foe-hp') + '</div>' +
         '<svg class="foe-sprite" viewBox="0 0 120 72" shape-rendering="crispEdges" aria-hidden="true">' +
@@ -236,12 +238,11 @@
   function showPlayAgain() {
     var box = panel.querySelector('.moves');
     box.innerHTML = '<button class="move play-again">▶ PLAY AGAIN</button>';
-    box.querySelector('.play-again').addEventListener('click', function () { startBattle(false); });
+    box.querySelector('.play-again').addEventListener('click', startBattle);
     box.querySelector('.play-again').focus();
   }
 
-  // Like the games: (loading screen) -> encounter flash -> sprites slide in -> battle text
-  function startBattle(withLoading) {
+  function startBattle() {
     timers.forEach(clearTimeout);
     timers = [];
     myHp = 100;
@@ -252,19 +253,18 @@
     renderMoves();
     setBusy(true);
 
-    var stages = [];
-    if (withLoading === true) stages.push(['is-loading', reduceMotion ? 300 : 1600]);
-    if (!reduceMotion) stages.push(['is-flash', 600], ['is-enter', 900]);
+    // Gen 1 wild-battle transition: flashes, then black stripes sweep across, then sprites slide in
+    var stages = reduceMotion ? [] : [['is-flash', 600], ['is-wipe', 800], ['is-enter', 900]];
     var t = 0;
     stages.forEach(function (stage) {
       later(function () {
-        panel.classList.remove('is-loading', 'is-flash', 'is-enter');
+        panel.classList.remove('is-flash', 'is-wipe', 'is-enter');
         panel.classList.add(stage[0]);
       }, t);
       t += stage[1];
     });
     later(function () {
-      panel.classList.remove('is-loading', 'is-flash', 'is-enter');
+      panel.classList.remove('is-flash', 'is-wipe', 'is-enter');
       say(['A wild CONFOUNDER Z appeared!', 'Z causes both X and Y.', 'What will YOU do?'], function () {
         setBusy(false);
         panel.querySelector('.move').focus();
@@ -283,7 +283,7 @@
       pixelate();
       buildPanel();
       document.addEventListener('keydown', onKey);
-      startBattle(true);
+      startBattle();
     } else {
       if (canvas) canvas.remove();
       if (panel) panel.remove();

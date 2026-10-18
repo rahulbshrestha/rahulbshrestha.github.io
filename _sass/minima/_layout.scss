@@ -807,47 +807,30 @@ div.qa {
 
   overflow: hidden;
 
-  // Loading screen, shown once when the battle opens
-  .battle-intro {
+  // Stripe wipe after the flash: bars sweep in from alternating sides
+  .battle-wipe {
     position: absolute;
     inset: 0;
     z-index: 2;
     display: none;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    background: $gb-darkest;
-    color: $gb-lightest;
-  }
-
-  .intro-title {
-    font-size: 18px;
-    line-height: 1.5;
-    text-align: center;
-    text-shadow: 3px 3px 0 $gb-dark;
-  }
-
-  .intro-sub {
-    font-size: 7px;
-    animation: retro-blink 0.8s steps(1) infinite;
-  }
-
-  .load-bar {
-    width: 60%;
-    height: 8px;
-    border: 2px solid $gb-lightest;
 
     i {
-      display: block;
-      height: 100%;
-      width: 0;
-      background: $gb-light;
+      flex: 1;
+      margin-bottom: -1px; // overlap so no light seams show between stripes
+      background: $gb-darkest;
+      transform: scaleX(0);
+      transform-origin: left;
     }
+
+    i:nth-child(even) { transform-origin: right; }
   }
 
-  &.is-loading .battle-intro { display: flex; }
-  &.is-loading .load-bar i { animation: retro-load 1.4s steps(10) forwards; }
+  &.is-wipe .battle-wipe { display: flex; }
+  &.is-wipe .battle-wipe i { animation: retro-wipe 0.4s steps(8) forwards; }
+  @for $n from 1 through 8 {
+    &.is-wipe .battle-wipe i:nth-child(#{$n}) { animation-delay: #{($n - 1) * 0.04}s; }
+  }
 
   // Wild-encounter flash
   &::after {
@@ -865,7 +848,10 @@ div.qa {
   // Sprites slide in from opposite sides; info boxes appear once they land
   &.is-flash .battle-field,
   &.is-flash .retro-text,
-  &.is-flash .moves { visibility: hidden; }
+  &.is-flash .moves,
+  &.is-wipe .battle-field,
+  &.is-wipe .retro-text,
+  &.is-wipe .moves { visibility: hidden; }
   &.is-enter .foe-sprite { animation: retro-slide-left 0.7s steps(7); }
   &.is-enter .me-sprite { animation: retro-slide-right 0.7s steps(7); }
   &.is-enter .info-box { visibility: hidden; }
@@ -885,7 +871,7 @@ div.qa {
 @keyframes retro-flicker { 50% { opacity: 0; } }
 @keyframes retro-pop { from { transform: scale(0.6); } to { transform: scale(1); } }
 @keyframes retro-hit { 50% { transform: translateX(3px); opacity: 0.4; } }
-@keyframes retro-load { to { width: 100%; } }
+@keyframes retro-wipe { to { transform: scaleX(1); } }
 @keyframes retro-encounter {
   0%, 34%, 68% { opacity: 1; }
   17%, 51% { opacity: 0; }
@@ -898,9 +884,7 @@ div.qa {
   .retro-battle,
   .retro-battle .retro-next,
   .retro-battle .edge-zx,
-  .retro-battle .hit,
-  .retro-battle .intro-sub,
-  .retro-battle .load-bar i { animation: none !important; }
+  .retro-battle .hit { animation: none !important; }
 }
 
 // Small hint under the profile photo pointing to the easter egg
