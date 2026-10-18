@@ -714,7 +714,7 @@ div.qa {
   .me-sprite {
     justify-self: center;
     align-self: end;
-    width: 96px;
+    width: 108px; // 3x the 36x32 sprite
     height: 96px;
     image-rendering: pixelated;
   }

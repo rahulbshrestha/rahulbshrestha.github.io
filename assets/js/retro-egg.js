@@ -15,62 +15,6 @@
     { name: 'IGNORE Z', why: 'Ignoring Z leaves the backdoor X←Z→Y open!' }
   ];
 
-  // Original pixel-art trainer seen from behind and to the side, mid-throw, Gen 1 style (40x40)
-  var TRAINER = [
-    '........................................',
-    '........................................',
-    '..................KKKKKKK...............',
-    '...............KKKDDDDLLLKKK............',
-    '..............KDDDDDDDLLLLLLK...........',
-    '.............KDDDDDDDDWWWWWWLK..........',
-    '............KDDDDDDDDDWWWWWWLLK.........',
-    '...........KDDDDDDDDDDLLWWLLLLLK........',
-    '...........KDDDDDDDDDDLLLLLLLLLK........',
-    '...........KDDDDDDDDDDLLLLLLLLLK........',
-    '...........KDDDDDDDDDDLLLLLLLLLK........',
-    '...........KDDDDDDDDDDLLLLLLLLLKKKKKK...',
-    '...........KDDDDDDDDDDLLLLLLKKDDDDDDDK..',
-    '............KDDDDDDDDDLLLLLLLKKKKKKKKKK.',
-    '............KKKKKKKKKKKKKKKKKKKKKKKKKK..',
-    '..............KDDDDDDDLLLLLLKK..........',
-    '..............KKKKDDDDLLLKKWWWK.........',
-    '..............KKKKKKKKKKKKWWWWK.........',
-    '..............KKKKKKKKKKKKWLWWK.........',
-    '..............KKKKKKKKKKKKWLWWK.........',
-    '............K..KKKKKKKKKKKWWWWK.........',
-    '........KKKKWKKKKKKKKKKKKKKWWWK.........',
-    '......KKLWWWWWWKKKKKKKKKKKKKKK..........',
-    '....KKLLLWWWWWWKKKKKKKKKK...............',
-    '...KDLLLLWWWWWWKKKKKKKKKK..KK...........',
-    '...KLLLLLWWWWWWWWKKKKKKKKKKDDK..........',
-    '..KLDLLLLWWWWWWWWWWWKKDDDDDDDDKK........',
-    '.KLDLLLLLWWWWWWWWWWWWKKDDDDDDDDDK.......',
-    '.KDLDLLLLWWWWWWWWWWWWKKDDDDDDDDDDKK.....',
-    '.KLDLLLLLWWWWWWWWWWWWWKKDDDDDDDWWWWKKK..',
-    '.KDKKKKKKKKKKKKKKKKKKKKKDDDDDDDWWWWWDDK.',
-    '.KLDLLLLLWWKLLKWWWWWWWWDDDDDDDDWWWDDDDDK',
-    '.KDLDLLLLWWKLLKWWWWWWWWDDDDDDDDWWWDDDDDD',
-    '.KLDLLLLLWWKKKKWWWWWWWWDDDDDDDDLDWKKWWKK',
-    '.KDLDLLLLWWWWWWWWWWWWWWDDDDDDDLDLDWWWWWW',
-    '..KDLLLLLWWWWWWWWWWWWWDDDDDDDDDLDDWWWWWK',
-    '...KDLLLLLLLLLLLLLLLLDDDDDDDDDLDLDDDWWK.',
-    '...KLLLLLLLLLLLLLLLLLDDDDDDDDDDDDDDDKK..',
-    '....KKLLLLLLLLLLLLLDDDDDDDDDDDDDDDDK....',
-    '......KKLDLDLDLDLDDDDDDDDDDDDDDDDDDK....'
-  ];
-  // Game Boy 4-shade greens: K darkest, D dark, L light, W lightest
-  var TRAINER_COLORS = { K: '#0f380f', D: '#306230', L: '#8bac0f', W: '#e0f0c0' };
-
-  function drawTrainer(target) {
-    var ctx = target.getContext('2d');
-    TRAINER.forEach(function (row, y) {
-      for (var x = 0; x < row.length; x++) {
-        var color = TRAINER_COLORS[row[x]];
-        if (color) { ctx.fillStyle = color; ctx.fillRect(x, y, 1, 1); }
-      }
-    });
-  }
-
   var canvas = null;
   var panel = null;
   var timers = [];
@@ -138,14 +82,13 @@
           '<rect class="node node-x" x="16" y="48" width="16" height="16"/><text x="24" y="59.5">X</text>' +
           '<rect class="node" x="88" y="48" width="16" height="16"/><text x="96" y="59.5">Y</text>' +
         '</svg>' +
-        '<canvas class="me-sprite" width="40" height="40" aria-hidden="true"></canvas>' +
+        '<img class="me-sprite" src="/assets/img/trainer.png" alt="" aria-hidden="true">' +
         '<div class="info-box me-info"><div class="mon-name">YOU</div>' + hpBar('me-hp') + '</div>' +
       '</div>' +
       '<div class="retro-text"><span class="retro-line" aria-hidden="true"></span><span class="retro-next" aria-hidden="true">▼</span></div>' +
       '<p class="retro-sr" aria-live="polite"></p>' +
       '<div class="moves"></div>';
     panel.querySelector('.retro-close').addEventListener('click', toggle);
-    drawTrainer(panel.querySelector('.me-sprite'));
     document.body.appendChild(panel);
   }
 
