@@ -15,48 +15,51 @@
     { name: 'P-HACK', why: 'P-hacking only finds fake effects!' }
   ];
 
-  // Original pixel-art trainer seen from behind (32x32), one character per pixel
+  // Original pixel-art trainer seen from behind, Gen 1 style (40x40), one character per pixel
   var TRAINER = [
-    '................................',
-    '................................',
-    '................................',
-    '............KKKKKKKK............',
-    '..........KKRRRRRRRRKK..........',
-    '.........KRRRRRRRRRRRRK.........',
-    '........KRRRRRRRRRRRRRRK........',
-    '........KRRRRRRWWRRRRRRK........',
-    '.......KRRRRRRRWWRRRRRRRK.......',
-    '.......KrrrrrrrrrrrrrrrrK.......',
-    '.......KKWWWWWWWWWWWWWWKK.......',
-    '.......KHHHHHHHHHHHHHHHHK.......',
-    '......KSHHHHHHHHHHHHHHHHSK......',
-    '......KSHHHHHHHHHHHHHHHHSK......',
-    '.......KHHHHHHHHHHHHHHHHK.......',
-    '........KHHHHHHHHHHHHHHK........',
-    '.........KKSSSSSSSSSSKK.........',
-    '......KKKKBBBBSSSSBBBBKKKK......',
-    '....KKBBBBBBBBBBBBBBBBBBBBKK....',
-    '...KBBBBBKYYYYYYYYYYYYYYKBBBBK..',
-    '..KBBBBBKYYYYYYYYYYYYYYYYKBBBBK.',
-    '..KBBBBKYYYYYYYYYYYYYYYYYYKBBBK.',
-    '.KBBBBBKYYYyyyyyyyyyyyyYYYKBBBBK',
-    '.KBBBBBKYYYyKKKKKKKKKKyYYYKBBBBK',
-    '.KbBBBBKYYYyyyyyyyyyyyyYYYKBBBbK',
-    '.KbBBBBKYYYYYYYYYYYYYYYYYYKBBBbK',
-    '.KbbBBBKYYYYYYYYYYYYYYYYYYKBBbbK',
-    '.KbbBBBKyyyyyyyyyyyyyyyyyyKBBbbK',
-    '.KbbbBBBKKKKKKKKKKKKKKKKKKBBbbbK',
-    '.KbbbBBBBBBBBBBBBBBBBBBBBBBBbbbK',
-    '.KbbbbBBBBBBBBBBBBBBBBBBBBBbbbbK',
-    '.KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'
+    '........................................',
+    '...................KK...................',
+    '..............KKKKKDDKKK................',
+    '............KKLLLLLLLLLLKK..............',
+    '..........KKLWWWWWLLLLLLLLKK............',
+    '.........KLWWWWWWWWWLLLLLLLLK...........',
+    '.........KLWWWWWWWWWLLLLLLLLK...........',
+    '........KLLWWWWWWWWWLLLLLLLLLK..........',
+    '........KLLLLWWWWWLLLLLLLLLLLK..........',
+    '.......KLLLLLLLLLLLLLLLLLLLLLLK.........',
+    '........KLLLLLLLLLLLLLLLLLLLLKKKKKKK....',
+    '........KLLLLLLLLLLLLLLLLLDDLLLLLLLDK...',
+    '.........KLLLLLLLLLLLLLLLLLDDDDDDDDDDK..',
+    '........KDDDDDDDDDDDDDDDDDDDDDDDDDDDK...',
+    '........KDDDDDDDDDDDDDDDDDDDDDKKKKKK....',
+    '........KWWKKKLLLLLLLLLLKKKKKK..........',
+    '........KWLKKKKKKKKKKKKKKKKKK...........',
+    '........KWWKKKKKKKKKKKKKKKKK............',
+    '........KWWKKKKKKKKKKKKKKKKK............',
+    '.........KK.KKKKKKKKKKKKKKK.............',
+    '............KKKKKKKKKKKKKKKKK...........',
+    '............KKKKKKKKKKKKKKKKK...........',
+    '............KKKKKKKKKKKKKKKKK...........',
+    '..............KKKKKKKKKKKKK.............',
+    '..............KKKKKKKKKKKKK.............',
+    '.............KKKKKKKKKKKKK..............',
+    '...........KKKKKKKKKKKKKKKKKK...........',
+    '.........KKDDDKKKKKKKKKKKDDDDKK.........',
+    '.......KKDDDDDDLLLLLLLLLDDDDDDDKK.......',
+    '......KDDDDDDLLWWWWWWWWWLLLDLLLDDK......',
+    '.....KDDDDDLDWWWWWWWWWWWWWWDLLLLDDK.....',
+    '....KDDDDDDLWWWWWWWWWWWWWWWLLLLLLLDK....',
+    '...KDDDDDDDLLLLLLLLLLLLLLLLLLLLLLLDDK...',
+    '..KDDDDDDDDDDDDDDDDDDDDDDDDDDLLLLLLDDK..',
+    '.KDDDDDDDDDDLLLLLLDWWDLLLLLLDLLLLLLLDDK.',
+    'KDDDDDDDDDDDLLLLLLDDDDLLLLLLDLLLLLLLDDDK',
+    'KDDDDDDDDDDDLLLLLLLLLLLLLLLLDLLLLLLLDDDK',
+    'KDDDDDDDDDDDLLLLLLLLLLLLLLLLDLLLLLLLLDDK',
+    'DDDDDDDDDDDDLLLLLLLLLLLLLLLLDLLLLLLLLDDD',
+    'DDDDDDDDDDDDLLLLLLLLLLLLLLLLDLLLLLLLLDDD'
   ];
-  // Game Boy 4-shade greens, as in the original Red/Blue
-  var TRAINER_COLORS = {
-    K: '#0f380f', H: '#0f380f', b: '#0f380f',
-    r: '#306230', B: '#306230', y: '#306230',
-    R: '#8bac0f', Y: '#8bac0f',
-    W: '#9bbc0f', S: '#9bbc0f'
-  };
+  // Game Boy 4-shade greens: K darkest, D dark, L light, W lightest
+  var TRAINER_COLORS = { K: '#0f380f', D: '#306230', L: '#8bac0f', W: '#e0f0c0' };
 
   function drawTrainer(target) {
     var ctx = target.getContext('2d');
@@ -135,7 +138,7 @@
           '<rect class="node node-x" x="16" y="48" width="16" height="16"/><text x="24" y="59.5">X</text>' +
           '<rect class="node" x="88" y="48" width="16" height="16"/><text x="96" y="59.5">Y</text>' +
         '</svg>' +
-        '<canvas class="me-sprite" width="32" height="32" aria-hidden="true"></canvas>' +
+        '<canvas class="me-sprite" width="40" height="40" aria-hidden="true"></canvas>' +
         '<div class="info-box me-info"><div class="mon-name">YOU</div>' + hpBar('me-hp') + '</div>' +
       '</div>' +
       '<div class="retro-text"><span class="retro-line" aria-hidden="true"></span><span class="retro-next" aria-hidden="true">▼</span></div>' +
