@@ -95,6 +95,22 @@
 
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
+  // The pixel font has no arrow glyph, so draw → and ← as small pixel icons and keep
+  // pairs like "Z→X" together on one line
+  var ARROW_SVG = '<svg class="px-arrow" viewBox="0 0 7 5" aria-hidden="true">' +
+    '<rect x="0" y="2" width="6" height="1"/>' +                                   // shaft
+    '<rect x="3" y="0" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/>' +  // chevron tip
+    '<rect x="5" y="2" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/>' +
+    '<rect x="3" y="4" width="1" height="1"/></svg>';
+
+  function withArrows(text) {
+    var safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return safe
+      .replace(/(\S*[→←]\S*)/g, '<span class="no-break">$1</span>')
+      .replace(/→/g, ARROW_SVG)
+      .replace(/←/g, ARROW_SVG.replace('px-arrow', 'px-arrow flip'));
+  }
+
   // Type each line into the text box in turn, run its optional effect, then call done
   function say(lines, done) {
     var box = panel.querySelector('.retro-line');
@@ -108,7 +124,7 @@
         if (line.effect) line.effect();
       }, t);
       for (var i = 1; i <= text.length; i++) {
-        (function (n) { later(function () { box.textContent = text.slice(0, n); }, t + CHAR_MS * n); })(i);
+        (function (n) { later(function () { box.innerHTML = withArrows(text.slice(0, n)); }, t + CHAR_MS * n); })(i);
       }
       t += CHAR_MS * text.length + PAUSE_MS;
     });

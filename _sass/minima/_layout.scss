@@ -734,6 +734,22 @@ div.qa {
     line-height: 1.8;
   }
 
+  .no-break {
+    white-space: nowrap;
+  }
+
+  .px-arrow {
+    display: inline-block;
+    width: 14px;
+    height: 10px;
+    margin: 0 2px;
+    vertical-align: 0;
+    fill: currentColor;
+    shape-rendering: crispEdges;
+
+    &.flip { transform: scaleX(-1); }
+  }
+
   .retro-next {
     position: absolute;
     right: 7px;
