@@ -12,51 +12,51 @@
     { name: 'do(X)', correct: true },
     { name: 'CORRELATE', why: 'Z drives both X and Y. Correlation is not causation!' },
     { name: 'MORE DATA', why: "More data won't fix bias. Z still confounds X and Y!" },
-    { name: 'SCALE UP', why: "A bigger model still learns Z's spurious link!" }
+    { name: 'IGNORE Z', why: 'Ignoring Z leaves the backdoor X←Z→Y open!' }
   ];
 
   // Original pixel-art trainer seen from behind and to the side, mid-throw, Gen 1 style (40x40)
   var TRAINER = [
     '........................................',
-    '....................K...................',
-    '...............KKKKKLKKKKK..............',
-    '.............KKDLLLLLLLLLLKK............',
-    '............KLDLLWWWWLLLLLLLK...........',
-    '...........KLDLWWWWWWWWLLLLLLK..........',
-    '..........KLDLDWWWWWWWWLLLLLLLK.........',
-    '.........KLDLDLWWWWWWWWLLLLLLLLK........',
-    '.........KDLDLDLLWWWWLLLLLLLLLLK........',
-    '.........KLDLDLDLLLLLLLLLLLLLLLK........',
-    '.........KDLDLDLLLLLLLLLLLLLLLLKKKKKK...',
-    '.........KLDLDLDLLLLLLLLLLDDLLLLLLLLDK..',
-    '..........KLDLDLLLLLLLLLLLLDDDDDDDDDDDK.',
-    '.........KDDDDDDDDDDDDDDDDDDDDDDDDDDDK..',
-    '.........KDDDDDDDDDDDDDDDDDDDDKKKKKKK...',
-    '..........KKKKKDLLLLLLLLLLKKKK..........',
-    '............KKKKKKKKLKKKKKWWWK..........',
-    '............KKKKKKKKKKKKKKLWWWK.........',
-    '.............KKKKKKKKKKKKKLWWWK.........',
-    '..........KKKKKKKKKKKKKKKKLWWWK.........',
-    '.......KKKLLLLKKKKKKKKKKKKWWWWK.........',
-    '......KLLLLLLLKKKKKKKKKKKKKWWK..........',
-    '.....KLLLWWWWWKKKKKKKKKKKKKKKK..........',
-    '....KLLWWWWWWWKKKKKKKKKDDDDDDDK.........',
-    '...KLLWWWWWWWWWWKKKKKKKDDDDDLLDK........',
-    '...KLWWWWWWWWWWWWWWLLKKDDDDDLLLDKK......',
-    '..KLLWWWWWWWWWWWWWWLLLKKDDDDDLLLDDK.....',
-    '..KLLLLLLLLLLLLLLLLLLLKKDDDDDDLLLDDK....',
-    '..KLLLLLLLLLLLLLLLLLLLKKDDDDDDDLLLDDK...',
-    '..KLLLLLLLLLLLLLLLLLLLLKKDDDDDDDLLLDDK..',
-    '..KLLLLLLLLLLLLLLLLLLLLKKDDDDDDDDLLLDDK.',
-    '..KLLLLLLLLLLLLLLLLLLLLKKDDDDDDDDDLLDDDK',
-    '..KDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWWWWK',
-    '..KDLDLLLLLDWWDLLLLLLLLLDDDDDDDDDDDWWWWK',
-    '..KLDLDLLLLDWWDLLLLLLLLLDDDDDDDDDDWWWWWW',
-    '..KDLDLLLLLDDDDLLLLLLLLLDDDDDDDDDDDWWWWK',
-    '..KLDLDLLLLLLLLLLLLLLLLLDDDDDDDDDDDWWWWK',
-    '..KDLDLLLLLLLLLLLLLLLLLLDDDDDDDDDDDDKKK.',
-    '..KLDLDLLLLLLLLLLLLLLLLLDDDDDDDDDDDK....',
-    '..KDLDLLLLLLLLLLLLLLLLLLDDDDDDDDDDK.....'
+    '........................................',
+    '..................KKKKKKK...............',
+    '...............KKKDDDDLLLKKK............',
+    '..............KDDDDDDDLLLLLLK...........',
+    '.............KDDDDDDDDWWWWWWLK..........',
+    '............KDDDDDDDDDWWWWWWLLK.........',
+    '...........KDDDDDDDDDDLLWWLLLLLK........',
+    '...........KDDDDDDDDDDLLLLLLLLLK........',
+    '...........KDDDDDDDDDDLLLLLLLLLK........',
+    '...........KDDDDDDDDDDLLLLLLLLLK........',
+    '...........KDDDDDDDDDDLLLLLLLLLKKKKKK...',
+    '...........KDDDDDDDDDDLLLLLLKKDDDDDDDK..',
+    '............KDDDDDDDDDLLLLLLLKKKKKKKKKK.',
+    '............KKKKKKKKKKKKKKKKKKKKKKKKKK..',
+    '..............KDDDDDDDLLLLLLKK..........',
+    '..............KKKKDDDDLLLKKWWWK.........',
+    '..............KKKKKKKKKKKKWWWWK.........',
+    '..............KKKKKKKKKKKKWLWWK.........',
+    '..............KKKKKKKKKKKKWLWWK.........',
+    '............K..KKKKKKKKKKKWWWWK.........',
+    '........KKKKWKKKKKKKKKKKKKKWWWK.........',
+    '......KKLWWWWWWKKKKKKKKKKKKKKK..........',
+    '....KKLLLWWWWWWKKKKKKKKKK...............',
+    '...KDLLLLWWWWWWKKKKKKKKKK..KK...........',
+    '...KLLLLLWWWWWWWWKKKKKKKKKKDDK..........',
+    '..KLDLLLLWWWWWWWWWWWKKDDDDDDDDKK........',
+    '.KLDLLLLLWWWWWWWWWWWWKKDDDDDDDDDK.......',
+    '.KDLDLLLLWWWWWWWWWWWWKKDDDDDDDDDDKK.....',
+    '.KLDLLLLLWWWWWWWWWWWWWKKDDDDDDDWWWWKKK..',
+    '.KDKKKKKKKKKKKKKKKKKKKKKDDDDDDDWWWWWDDK.',
+    '.KLDLLLLLWWKLLKWWWWWWWWDDDDDDDDWWWDDDDDK',
+    '.KDLDLLLLWWKLLKWWWWWWWWDDDDDDDDWWWDDDDDD',
+    '.KLDLLLLLWWKKKKWWWWWWWWDDDDDDDDLDWKKWWKK',
+    '.KDLDLLLLWWWWWWWWWWWWWWDDDDDDDLDLDWWWWWW',
+    '..KDLLLLLWWWWWWWWWWWWWDDDDDDDDDLDDWWWWWK',
+    '...KDLLLLLLLLLLLLLLLLDDDDDDDDDLDLDDDWWK.',
+    '...KLLLLLLLLLLLLLLLLLDDDDDDDDDDDDDDDKK..',
+    '....KKLLLLLLLLLLLLLDDDDDDDDDDDDDDDDK....',
+    '......KKLDLDLDLDLDDDDDDDDDDDDDDDDDDK....'
   ];
   // Game Boy 4-shade greens: K darkest, D dark, L light, W lightest
   var TRAINER_COLORS = { K: '#0f380f', D: '#306230', L: '#8bac0f', W: '#e0f0c0' };
@@ -222,7 +222,7 @@
         { text: 'The arrow Z→X is cut. The backdoor path is closed!', effect: function () { panel.setAttribute('data-state', 'cut'); } },
         { text: "It's super effective!", effect: function () { setHp('foe-hp', 0); hit(panel.querySelector('.foe-sprite')); } },
         { text: 'CONFOUNDER Z fainted!', effect: function () { panel.setAttribute('data-state', 'won'); } },
-        'You found the causal effect of X on Y!'
+        'You beat confounding and got the causal effect of X on Y!'
       ], showPlayAgain);
     } else {
       button.classList.add('no-pp');
@@ -271,7 +271,6 @@
       panel.classList.remove('is-flash', 'is-wipe', 'is-enter');
       say(['A wild CONFOUNDER Z appeared!', 'Z causes both X and Y.', 'What will YOU do?'], function () {
         setBusy(false);
-        panel.querySelector('.move').focus();
       });
     }, t);
   }
