@@ -584,17 +584,24 @@ div.qa {
 }
 
 .retro-battle {
+  $gb-darkest: #0f380f;
+  $gb-dark: #306230;
+  $gb-light: #8bac0f;
+  $gb-lightest: #9bbc0f;
+
   position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 100;
-  width: 300px;
+  width: 340px;
   max-width: calc(100vw - 32px);
-  background: #9bbc0f;
+  box-sizing: border-box;
+  padding: 10px;
+  background: $gb-lightest;
   border: 3px solid $text-color;
   box-shadow: 6px 6px 0 $text-color;
   font-family: 'Press Start 2P', monospace;
-  color: #0f380f;
+  color: $gb-darkest;
   animation: retro-pop 0.25s steps(3);
 
   @include media-query($on-palm) {
@@ -606,55 +613,121 @@ div.qa {
 
   .retro-close {
     position: absolute;
-    top: 4px;
-    right: 6px;
+    top: 2px;
+    right: 4px;
+    z-index: 1;
     border: 0;
     background: none;
     font: inherit;
     font-size: 10px;
-    color: #0f380f;
+    color: $gb-darkest;
     cursor: pointer;
     padding: 4px;
   }
 
-  svg {
+  // Opponent top, player bottom, like a Pokémon battle screen
+  .battle-field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 6px 8px;
+    margin: 8px 0 10px;
+  }
+
+  .info-box {
+    padding: 5px 7px;
+    background: $white-color;
+    border: 2px solid $gb-darkest;
+    border-radius: 3px 3px 10px 3px;
+  }
+
+  .mon-name {
+    font-size: 7px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+  }
+
+  .hp {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hp-label {
+    font-size: 6px;
+    color: #e0a100;
+  }
+
+  .hp-bar {
+    flex: 1;
+    height: 5px;
+    background: #e8e8e8;
+    border: 1px solid $gb-darkest;
+  }
+
+  .hp-fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: #3fbf5f;
+    transition: width 0.6s steps(6);
+
+    &.mid { background: #e0b000; }
+    &.low { background: #e04040; }
+  }
+
+  .foe-sprite {
     display: block;
     width: 100%;
     height: auto;
-    padding: 18px 16px 6px;
-    box-sizing: border-box;
 
     .edge {
-      stroke: #0f380f;
+      stroke: $gb-darkest;
       stroke-width: 2;
     }
 
     .cut {
-      stroke: #0f380f;
+      stroke: $gb-darkest;
       stroke-width: 2;
       opacity: 0;
     }
 
     .node {
-      fill: #8bac0f;
-      stroke: #0f380f;
+      fill: $gb-light;
+      stroke: $gb-darkest;
       stroke-width: 2;
     }
+
+    .node-z { fill: $gb-dark; }
 
     text {
       font-family: 'Press Start 2P', monospace;
       font-size: 8px;
       text-anchor: middle;
-      fill: #0f380f;
+      fill: $gb-darkest;
     }
+
+    .label-z { fill: $gb-lightest; }
+  }
+
+  .me-sprite {
+    justify-self: center;
+    width: 72px;
+    height: 72px;
+    image-rendering: pixelated;
+    border: 2px solid $gb-darkest;
+  }
+
+  .hit {
+    animation: retro-hit 0.4s steps(2) 2;
   }
 
   .retro-text {
     position: relative;
-    min-height: 58px;
-    margin: 0 10px 10px;
-    padding: 10px 22px 10px 10px;
-    border: 2px solid #0f380f;
+    min-height: 44px;
+    padding: 9px 22px 9px 9px;
+    border: 2px solid $gb-darkest;
     border-radius: 3px;
     background: $white-color;
     font-size: 8px;
@@ -669,32 +742,91 @@ div.qa {
     animation: retro-blink 1s steps(1) infinite;
   }
 
+  .retro-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: 0;
+  }
+
+  // 2x2 move menu
+  .moves {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .move {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 7px 8px;
+    background: $white-color;
+    border: 2px solid $gb-darkest;
+    border-radius: 3px;
+    font: inherit;
+    font-size: 8px;
+    color: $gb-darkest;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+      background: $gb-light;
+      outline: none;
+    }
+
+    &:hover:not(:disabled) .move-name::before,
+    &:focus-visible .move-name::before {
+      content: "▶ ";
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+
+    &.no-pp {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+
+    .pp {
+      font-size: 6px;
+      color: $gb-dark;
+    }
+  }
+
+  .play-again {
+    grid-column: 1 / -1;
+    align-items: center;
+  }
+
   // Graph states driven by the script
-  &[data-state="start"] .edge-xy,
-  &[data-state="start"] .edge-zx,
-  &[data-state="start"] .edge-zy { opacity: 0; }
-
-  &[data-state="confounded"] .node-z { fill: #306230; }
-  &[data-state="confounded"] .label-z { fill: #9bbc0f; }
-
-  &[data-state="intervene"] .node-x { fill: #306230; }
+  &[data-state="intervene"] .node-x { fill: $gb-dark; }
   &[data-state="intervene"] .edge-zx { animation: retro-flicker 0.4s steps(1) infinite; }
-
   &[data-state="cut"] .edge-zx,
-  &[data-state="done"] .edge-zx { opacity: 0.2; }
+  &[data-state="won"] .edge-zx { opacity: 0.2; }
   &[data-state="cut"] .cut,
-  &[data-state="done"] .cut { opacity: 1; }
-  &[data-state="done"] .edge-xy { stroke-width: 3; }
+  &[data-state="won"] .cut { opacity: 1; }
+  &[data-state="won"] .edge-xy { stroke-width: 3; }
+  &[data-state="won"] .node-z { opacity: 0.4; }
 }
 
 @keyframes retro-blink { 50% { opacity: 0; } }
 @keyframes retro-flicker { 50% { opacity: 0; } }
 @keyframes retro-pop { from { transform: scale(0.6); } to { transform: scale(1); } }
+@keyframes retro-hit { 50% { transform: translateX(3px); opacity: 0.4; } }
 
 @media (prefers-reduced-motion: reduce) {
   .retro-battle,
   .retro-battle .retro-next,
-  .retro-battle .edge-zx { animation: none !important; }
+  .retro-battle .edge-zx,
+  .retro-battle .hit { animation: none !important; }
 }
 
 // Small hint under the profile photo pointing to the easter egg

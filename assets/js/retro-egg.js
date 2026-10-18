@@ -1,14 +1,25 @@
-// Easter egg: clicking the profile photo turns it into a Game Boy-style pixel image
-// and plays a short causality "battle" where do(X) cuts the confounded edge Z -> X.
+// Easter egg: clicking the profile photo turns it into pixel art and opens a Pokémon-style
+// battle against CONFOUNDER Z. Of four moves only do(X) works: it cuts the confounded edge
+// Z -> X. The wrong moves run out of PP and Z's bias hits back.
 (function () {
   var photo = document.getElementById('profile-photo');
   if (!photo) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CHAR_MS = reduceMotion ? 0 : 30;
+  var PAUSE_MS = reduceMotion ? 400 : 1100;
+  var MOVES = [
+    { name: 'do(X)', correct: true },
+    { name: 'CORRELATE', why: 'Correlation is not causation. Z still fools you!' },
+    { name: 'MORE DATA', why: 'More data does not remove confounding!' },
+    { name: 'P-HACK', why: 'P-hacking only finds fake effects!' }
+  ];
+
   var canvas = null;
   var panel = null;
   var timers = [];
   var active = false;
+  var myHp = 100;
 
   function loadFont() {
     if (document.getElementById('retro-font')) return;
@@ -46,57 +57,150 @@
     photo.parentNode.insertBefore(canvas, photo);
   }
 
+  function hpBar(cls) {
+    return '<div class="hp"><span class="hp-label">HP</span><div class="hp-bar"><i class="hp-fill ' + cls + '"></i></div></div>';
+  }
+
   function buildPanel() {
     panel = document.createElement('div');
     panel.className = 'retro-battle';
     panel.setAttribute('role', 'dialog');
-    panel.setAttribute('aria-label', 'Causality animation: intervening on X with do(X) cuts the confounding arrow from Z');
+    panel.setAttribute('aria-label', 'Causality battle: pick the move that defeats the confounder');
     panel.innerHTML =
       '<button class="retro-close" aria-label="Close">✕</button>' +
-      '<svg viewBox="0 0 120 72" shape-rendering="crispEdges" aria-hidden="true">' +
-      '<defs><marker id="retro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto">' +
-      '<path d="M0,0 L6,3 L0,6 z" fill="#0f380f"/></marker></defs>' +
-      '<line class="edge edge-zx" x1="54" y1="18" x2="30" y2="47" marker-end="url(#retro-arrow)"/>' +
-      '<line class="edge edge-zy" x1="66" y1="18" x2="90" y2="47" marker-end="url(#retro-arrow)"/>' +
-      '<line class="edge edge-xy" x1="34" y1="56" x2="84" y2="56" marker-end="url(#retro-arrow)"/>' +
-      '<g class="cut"><line x1="37" y1="28" x2="47" y2="38"/><line x1="47" y1="28" x2="37" y2="38"/></g>' +
-      '<rect class="node node-z" x="52" y="2" width="16" height="16"/><text class="label-z" x="60" y="13.5">Z</text>' +
-      '<rect class="node node-x" x="16" y="48" width="16" height="16"/><text x="24" y="59.5">X</text>' +
-      '<rect class="node" x="88" y="48" width="16" height="16"/><text x="96" y="59.5">Y</text>' +
-      '</svg>' +
-      '<div class="retro-text"><span class="retro-line"></span><span class="retro-next">▼</span></div>';
+      '<div class="battle-field">' +
+        '<div class="info-box foe-info"><div class="mon-name">CONFOUNDER Z</div>' + hpBar('foe-hp') + '</div>' +
+        '<svg class="foe-sprite" viewBox="0 0 120 72" shape-rendering="crispEdges" aria-hidden="true">' +
+          '<defs><marker id="retro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto">' +
+          '<path d="M0,0 L6,3 L0,6 z" fill="#0f380f"/></marker></defs>' +
+          '<line class="edge edge-zx" x1="54" y1="18" x2="30" y2="47" marker-end="url(#retro-arrow)"/>' +
+          '<line class="edge edge-zy" x1="66" y1="18" x2="90" y2="47" marker-end="url(#retro-arrow)"/>' +
+          '<line class="edge edge-xy" x1="34" y1="56" x2="84" y2="56" marker-end="url(#retro-arrow)"/>' +
+          '<g class="cut"><line x1="37" y1="28" x2="47" y2="38"/><line x1="47" y1="28" x2="37" y2="38"/></g>' +
+          '<rect class="node node-z" x="52" y="2" width="16" height="16"/><text class="label-z" x="60" y="13.5">Z</text>' +
+          '<rect class="node node-x" x="16" y="48" width="16" height="16"/><text x="24" y="59.5">X</text>' +
+          '<rect class="node" x="88" y="48" width="16" height="16"/><text x="96" y="59.5">Y</text>' +
+        '</svg>' +
+        '<canvas class="me-sprite" width="64" height="64" aria-hidden="true"></canvas>' +
+        '<div class="info-box me-info"><div class="mon-name">YOU</div>' + hpBar('me-hp') + '</div>' +
+      '</div>' +
+      '<div class="retro-text"><span class="retro-line" aria-hidden="true"></span><span class="retro-next" aria-hidden="true">▼</span></div>' +
+      '<p class="retro-sr" aria-live="polite"></p>' +
+      '<div class="moves"></div>';
     panel.querySelector('.retro-close').addEventListener('click', toggle);
+    panel.querySelector('.me-sprite').getContext('2d').drawImage(canvas, 0, 0);
     document.body.appendChild(panel);
   }
 
-  // Each scene: the text to type and the state of the graph while it shows
-  var scenes = [
-    { text: 'A wild CONFOUNDER Z appeared!', state: 'start' },
-    { text: 'Z causes both X and Y. Correlation is not causation!', state: 'confounded' },
-    { text: 'YOU used INTERVENTION do(X)!', state: 'intervene' },
-    { text: 'The arrow Z→X is cut. The backdoor path is blocked!', state: 'cut' },
-    { text: "It's super effective! You found the causal effect of X on Y.", state: 'done' }
-  ];
-
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
-  function play() {
-    var line = panel.querySelector('.retro-line');
-    if (reduceMotion) {
-      panel.setAttribute('data-state', 'done');
-      line.textContent = scenes[scenes.length - 1].text;
-      return;
-    }
-    var t = 300;
-    scenes.forEach(function (scene) {
+  // Type each line into the text box in turn, run its optional effect, then call done
+  function say(lines, done) {
+    var box = panel.querySelector('.retro-line');
+    var sr = panel.querySelector('.retro-sr');
+    var t = 0;
+    lines.forEach(function (line) {
+      var text = typeof line === 'string' ? line : line.text;
       later(function () {
-        panel.setAttribute('data-state', scene.state);
-        line.textContent = '';
+        box.textContent = '';
+        sr.textContent = text;
+        if (line.effect) line.effect();
       }, t);
-      for (var i = 1; i <= scene.text.length; i++) {
-        (function (n) { later(function () { line.textContent = scene.text.slice(0, n); }, t + 40 * n); })(i);
+      for (var i = 1; i <= text.length; i++) {
+        (function (n) { later(function () { box.textContent = text.slice(0, n); }, t + CHAR_MS * n); })(i);
       }
-      t += 40 * scene.text.length + 1500;
+      t += CHAR_MS * text.length + PAUSE_MS;
+    });
+    // Hand control back as soon as the last line has finished typing
+    later(done || function () {}, t - PAUSE_MS);
+  }
+
+  function setHp(cls, value) {
+    var fill = panel.querySelector('.' + cls);
+    fill.style.width = value + '%';
+    fill.className = 'hp-fill ' + cls + (value <= 25 ? ' low' : value <= 50 ? ' mid' : '');
+  }
+
+  function setBusy(busy) {
+    panel.querySelectorAll('.move').forEach(function (b) {
+      b.disabled = busy || b.classList.contains('no-pp');
+    });
+  }
+
+  function shuffle(list) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function renderMoves() {
+    var box = panel.querySelector('.moves');
+    box.innerHTML = '';
+    shuffle(MOVES).forEach(function (move) {
+      var b = document.createElement('button');
+      b.className = 'move';
+      b.innerHTML = '<span class="move-name"></span><span class="pp">PP 1/1</span>';
+      b.querySelector('.move-name').textContent = move.name;
+      b.setAttribute('aria-label', 'Use ' + move.name);
+      b.addEventListener('click', function () { useMove(move, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function hit(el) {
+    el.classList.remove('hit');
+    void el.offsetWidth; // restart the shake animation
+    el.classList.add('hit');
+  }
+
+  function useMove(move, button) {
+    setBusy(true);
+    if (move.correct) {
+      say([
+        { text: 'YOU used do(X)!', effect: function () { panel.setAttribute('data-state', 'intervene'); } },
+        { text: 'The arrow Z→X is cut. The backdoor path is closed!', effect: function () { panel.setAttribute('data-state', 'cut'); } },
+        { text: "It's super effective!", effect: function () { setHp('foe-hp', 0); hit(panel.querySelector('.foe-sprite')); } },
+        { text: 'CONFOUNDER Z fainted!', effect: function () { panel.setAttribute('data-state', 'won'); } },
+        'You found the causal effect of X on Y!'
+      ], showPlayAgain);
+    } else {
+      button.classList.add('no-pp');
+      button.querySelector('.pp').textContent = 'PP 0/1';
+      button.setAttribute('aria-label', move.name + ' (no PP left)');
+      myHp = Math.max(myHp - 25, 10);
+      say([
+        'YOU used ' + move.name + '!',
+        "It's not very effective...",
+        move.why,
+        { text: "CONFOUNDER Z's bias hit YOU!", effect: function () { setHp('me-hp', myHp); hit(panel.querySelector('.me-sprite')); } },
+        move.name + ' has no PP left!',
+        'What will YOU do?'
+      ], function () { setBusy(false); });
+    }
+  }
+
+  function showPlayAgain() {
+    var box = panel.querySelector('.moves');
+    box.innerHTML = '<button class="move play-again">▶ PLAY AGAIN</button>';
+    box.querySelector('.play-again').addEventListener('click', startBattle);
+    box.querySelector('.play-again').focus();
+  }
+
+  function startBattle() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    myHp = 100;
+    panel.removeAttribute('data-state');
+    setHp('foe-hp', 100);
+    setHp('me-hp', 100);
+    renderMoves();
+    setBusy(true);
+    say(['A wild CONFOUNDER Z appeared!', 'Z causes both X and Y.', 'What will YOU do?'], function () {
+      setBusy(false);
+      panel.querySelector('.move').focus();
     });
   }
 
@@ -111,7 +215,7 @@
       pixelate();
       buildPanel();
       document.addEventListener('keydown', onKey);
-      play();
+      startBattle();
     } else {
       if (canvas) canvas.remove();
       if (panel) panel.remove();
