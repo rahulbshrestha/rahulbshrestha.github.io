@@ -713,10 +713,9 @@ div.qa {
 
   .me-sprite {
     justify-self: center;
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     image-rendering: pixelated;
-    border: 2px solid $gb-darkest;
   }
 
   .hit {
@@ -806,6 +805,71 @@ div.qa {
     align-items: center;
   }
 
+  overflow: hidden;
+
+  // Loading screen, shown once when the battle opens
+  .battle-intro {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: $gb-darkest;
+    color: $gb-lightest;
+  }
+
+  .intro-title {
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    text-shadow: 3px 3px 0 $gb-dark;
+  }
+
+  .intro-sub {
+    font-size: 7px;
+    animation: retro-blink 0.8s steps(1) infinite;
+  }
+
+  .load-bar {
+    width: 60%;
+    height: 8px;
+    border: 2px solid $gb-lightest;
+
+    i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: $gb-light;
+    }
+  }
+
+  &.is-loading .battle-intro { display: flex; }
+  &.is-loading .load-bar i { animation: retro-load 1.4s steps(10) forwards; }
+
+  // Wild-encounter flash
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    background: $gb-darkest;
+  }
+
+  &.is-flash::after { animation: retro-encounter 0.6s steps(1) forwards; }
+
+  // Sprites slide in from opposite sides; info boxes appear once they land
+  &.is-flash .battle-field,
+  &.is-flash .retro-text,
+  &.is-flash .moves { visibility: hidden; }
+  &.is-enter .foe-sprite { animation: retro-slide-left 0.7s steps(7); }
+  &.is-enter .me-sprite { animation: retro-slide-right 0.7s steps(7); }
+  &.is-enter .info-box { visibility: hidden; }
+
   // Graph states driven by the script
   &[data-state="intervene"] .node-x { fill: $gb-dark; }
   &[data-state="intervene"] .edge-zx { animation: retro-flicker 0.4s steps(1) infinite; }
@@ -821,12 +885,22 @@ div.qa {
 @keyframes retro-flicker { 50% { opacity: 0; } }
 @keyframes retro-pop { from { transform: scale(0.6); } to { transform: scale(1); } }
 @keyframes retro-hit { 50% { transform: translateX(3px); opacity: 0.4; } }
+@keyframes retro-load { to { width: 100%; } }
+@keyframes retro-encounter {
+  0%, 34%, 68% { opacity: 1; }
+  17%, 51% { opacity: 0; }
+  85%, 100% { opacity: 1; }
+}
+@keyframes retro-slide-left { from { transform: translateX(-140%); } to { transform: translateX(0); } }
+@keyframes retro-slide-right { from { transform: translateX(160%); } to { transform: translateX(0); } }
 
 @media (prefers-reduced-motion: reduce) {
   .retro-battle,
   .retro-battle .retro-next,
   .retro-battle .edge-zx,
-  .retro-battle .hit { animation: none !important; }
+  .retro-battle .hit,
+  .retro-battle .intro-sub,
+  .retro-battle .load-bar i { animation: none !important; }
 }
 
 // Small hint under the profile photo pointing to the easter egg

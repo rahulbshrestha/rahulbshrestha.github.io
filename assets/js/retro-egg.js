@@ -1,5 +1,5 @@
 // Easter egg: clicking the profile photo turns it into pixel art and opens a Pokémon-style
-// battle against CONFOUNDER Z. Of four moves only do(X) works: it cuts the confounded edge
+// battle where your trainer faces CONFOUNDER Z. Of four moves only do(X) works: it cuts the confounded edge
 // Z -> X. The wrong moves run out of PP and Z's bias hits back.
 (function () {
   var photo = document.getElementById('profile-photo');
@@ -14,6 +14,56 @@
     { name: 'MORE DATA', why: 'More data does not remove confounding!' },
     { name: 'P-HACK', why: 'P-hacking only finds fake effects!' }
   ];
+
+  // Original pixel-art trainer seen from behind (32x32), one character per pixel
+  var TRAINER = [
+    '................................',
+    '................................',
+    '................................',
+    '............KKKKKKKK............',
+    '..........KKRRRRRRRRKK..........',
+    '.........KRRRRRRRRRRRRK.........',
+    '........KRRRRRRRRRRRRRRK........',
+    '........KRRRRRRWWRRRRRRK........',
+    '.......KRRRRRRRWWRRRRRRRK.......',
+    '.......KrrrrrrrrrrrrrrrrK.......',
+    '.......KKWWWWWWWWWWWWWWKK.......',
+    '.......KHHHHHHHHHHHHHHHHK.......',
+    '......KSHHHHHHHHHHHHHHHHSK......',
+    '......KSHHHHHHHHHHHHHHHHSK......',
+    '.......KHHHHHHHHHHHHHHHHK.......',
+    '........KHHHHHHHHHHHHHHK........',
+    '.........KKSSSSSSSSSSKK.........',
+    '......KKKKBBBBSSSSBBBBKKKK......',
+    '....KKBBBBBBBBBBBBBBBBBBBBKK....',
+    '...KBBBBBKYYYYYYYYYYYYYYKBBBBK..',
+    '..KBBBBBKYYYYYYYYYYYYYYYYKBBBBK.',
+    '..KBBBBKYYYYYYYYYYYYYYYYYYKBBBK.',
+    '.KBBBBBKYYYyyyyyyyyyyyyYYYKBBBBK',
+    '.KBBBBBKYYYyKKKKKKKKKKyYYYKBBBBK',
+    '.KbBBBBKYYYyyyyyyyyyyyyYYYKBBBbK',
+    '.KbBBBBKYYYYYYYYYYYYYYYYYYKBBBbK',
+    '.KbbBBBKYYYYYYYYYYYYYYYYYYKBBbbK',
+    '.KbbBBBKyyyyyyyyyyyyyyyyyyKBBbbK',
+    '.KbbbBBBKKKKKKKKKKKKKKKKKKBBbbbK',
+    '.KbbbBBBBBBBBBBBBBBBBBBBBBBBbbbK',
+    '.KbbbbBBBBBBBBBBBBBBBBBBBBBbbbbK',
+    '.KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'
+  ];
+  var TRAINER_COLORS = {
+    K: '#1a1a1a', R: '#d23c3c', r: '#9e2a2a', W: '#ffffff', H: '#3b2a20',
+    S: '#f2c29b', B: '#2f6fd1', b: '#22509a', Y: '#e8b83a', y: '#b88a1f'
+  };
+
+  function drawTrainer(target) {
+    var ctx = target.getContext('2d');
+    TRAINER.forEach(function (row, y) {
+      for (var x = 0; x < row.length; x++) {
+        var color = TRAINER_COLORS[row[x]];
+        if (color) { ctx.fillStyle = color; ctx.fillRect(x, y, 1, 1); }
+      }
+    });
+  }
 
   var canvas = null;
   var panel = null;
@@ -68,6 +118,8 @@
     panel.setAttribute('aria-label', 'Causality battle: pick the move that defeats the confounder');
     panel.innerHTML =
       '<button class="retro-close" aria-label="Close">✕</button>' +
+      '<div class="battle-intro" aria-hidden="true"><div class="intro-title">CAUSAL<br>BATTLE</div>' +
+        '<div class="intro-sub">LOADING...</div><div class="load-bar"><i></i></div></div>' +
       '<div class="battle-field">' +
         '<div class="info-box foe-info"><div class="mon-name">CONFOUNDER Z</div>' + hpBar('foe-hp') + '</div>' +
         '<svg class="foe-sprite" viewBox="0 0 120 72" shape-rendering="crispEdges" aria-hidden="true">' +
@@ -81,14 +133,14 @@
           '<rect class="node node-x" x="16" y="48" width="16" height="16"/><text x="24" y="59.5">X</text>' +
           '<rect class="node" x="88" y="48" width="16" height="16"/><text x="96" y="59.5">Y</text>' +
         '</svg>' +
-        '<canvas class="me-sprite" width="64" height="64" aria-hidden="true"></canvas>' +
+        '<canvas class="me-sprite" width="32" height="32" aria-hidden="true"></canvas>' +
         '<div class="info-box me-info"><div class="mon-name">YOU</div>' + hpBar('me-hp') + '</div>' +
       '</div>' +
       '<div class="retro-text"><span class="retro-line" aria-hidden="true"></span><span class="retro-next" aria-hidden="true">▼</span></div>' +
       '<p class="retro-sr" aria-live="polite"></p>' +
       '<div class="moves"></div>';
     panel.querySelector('.retro-close').addEventListener('click', toggle);
-    panel.querySelector('.me-sprite').getContext('2d').drawImage(canvas, 0, 0);
+    drawTrainer(panel.querySelector('.me-sprite'));
     document.body.appendChild(panel);
   }
 
@@ -169,14 +221,13 @@
     } else {
       button.classList.add('no-pp');
       button.querySelector('.pp').textContent = 'PP 0/1';
-      button.setAttribute('aria-label', move.name + ' (no PP left)');
+      button.setAttribute('aria-label', move.name + ' (used)');
       myHp = Math.max(myHp - 25, 10);
       say([
         'YOU used ' + move.name + '!',
         "It's not very effective...",
         move.why,
         { text: "CONFOUNDER Z's bias hit YOU!", effect: function () { setHp('me-hp', myHp); hit(panel.querySelector('.me-sprite')); } },
-        move.name + ' has no PP left!',
         'What will YOU do?'
       ], function () { setBusy(false); });
     }
@@ -185,23 +236,40 @@
   function showPlayAgain() {
     var box = panel.querySelector('.moves');
     box.innerHTML = '<button class="move play-again">▶ PLAY AGAIN</button>';
-    box.querySelector('.play-again').addEventListener('click', startBattle);
+    box.querySelector('.play-again').addEventListener('click', function () { startBattle(false); });
     box.querySelector('.play-again').focus();
   }
 
-  function startBattle() {
+  // Like the games: (loading screen) -> encounter flash -> sprites slide in -> battle text
+  function startBattle(withLoading) {
     timers.forEach(clearTimeout);
     timers = [];
     myHp = 100;
     panel.removeAttribute('data-state');
+    panel.querySelector('.retro-line').textContent = '';
     setHp('foe-hp', 100);
     setHp('me-hp', 100);
     renderMoves();
     setBusy(true);
-    say(['A wild CONFOUNDER Z appeared!', 'Z causes both X and Y.', 'What will YOU do?'], function () {
-      setBusy(false);
-      panel.querySelector('.move').focus();
+
+    var stages = [];
+    if (withLoading === true) stages.push(['is-loading', reduceMotion ? 300 : 1600]);
+    if (!reduceMotion) stages.push(['is-flash', 600], ['is-enter', 900]);
+    var t = 0;
+    stages.forEach(function (stage) {
+      later(function () {
+        panel.classList.remove('is-loading', 'is-flash', 'is-enter');
+        panel.classList.add(stage[0]);
+      }, t);
+      t += stage[1];
     });
+    later(function () {
+      panel.classList.remove('is-loading', 'is-flash', 'is-enter');
+      say(['A wild CONFOUNDER Z appeared!', 'Z causes both X and Y.', 'What will YOU do?'], function () {
+        setBusy(false);
+        panel.querySelector('.move').focus();
+      });
+    }, t);
   }
 
   function onKey(e) { if (e.key === 'Escape') toggle(); }
@@ -215,7 +283,7 @@
       pixelate();
       buildPanel();
       document.addEventListener('keydown', onKey);
-      startBattle();
+      startBattle(true);
     } else {
       if (canvas) canvas.remove();
       if (panel) panel.remove();
