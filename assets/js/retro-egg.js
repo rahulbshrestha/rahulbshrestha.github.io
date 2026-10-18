@@ -10,9 +10,9 @@
   var PAUSE_MS = reduceMotion ? 400 : 1100;
   var MOVES = [
     { name: 'do(X)', correct: true },
-    { name: 'CORRELATE', why: 'Correlation is not causation. Z still fools you!' },
-    { name: 'MORE DATA', why: 'More data does not remove confounding!' },
-    { name: 'P-HACK', why: 'P-hacking only finds fake effects!' }
+    { name: 'CORRELATE', why: 'Z drives both X and Y. Correlation is not causation!' },
+    { name: 'MORE DATA', why: "More data won't fix bias. Z still confounds X and Y!" },
+    { name: 'SCALE UP', why: "A bigger model still learns Z's spurious link!" }
   ];
 
   // Original pixel-art trainer seen from behind and to the side, mid-throw, Gen 1 style (40x40)
@@ -218,6 +218,7 @@
     if (move.correct) {
       say([
         { text: 'YOU used do(X)!', effect: function () { panel.setAttribute('data-state', 'intervene'); } },
+        "You set X yourself, so Z can't affect it.",
         { text: 'The arrow Z→X is cut. The backdoor path is closed!', effect: function () { panel.setAttribute('data-state', 'cut'); } },
         { text: "It's super effective!", effect: function () { setHp('foe-hp', 0); hit(panel.querySelector('.foe-sprite')); } },
         { text: 'CONFOUNDER Z fainted!', effect: function () { panel.setAttribute('data-state', 'won'); } },
