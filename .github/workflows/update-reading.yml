@@ -1,6 +1,7 @@
 name: Update reading list
 
-# Pulls the Goodreads to-read shelf once a day and commits any changes,
+# Pulls the Goodreads read, currently-reading and to-read shelves once a day
+# (via the public bookshelf widget) and commits any changes,
 # which republishes the Reading page.
 on:
   schedule:
